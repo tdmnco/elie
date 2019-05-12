@@ -1,0 +1,35 @@
+{
+  "author": "Kasper Tidemann",
+  "bugs": {
+    "url": "https://github.com/tdmnco/elie/issues"
+  },
+  "description": "Elie is eloquent writing based on simple Markdown processing.",
+  "devDependencies": {
+    "@babel/core": "7.4.4",
+    "@babel/plugin-transform-runtime": "7.4.4",
+    "@babel/preset-env": "7.4.4",
+    "babel-eslint": "10.0.1",
+    "eslint": "5.16.0",
+    "gray-matter": "4.0.2",
+    "jest": "24.8.0",
+    "marked": "0.6.2",
+    "npm": "6.9.0",
+    "parcel-bundler": "1.12.3"
+  },
+  "homepage": "https://github.com/tdmnco/elie#readme",
+  "keywords": [
+    "javascript",
+    "json",
+    "tdmnco",
+    "writing"
+  ],
+  "license": "MIT",
+  "main": "dist/elie.js",
+  "name": "elie",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tdmnco/elie.git"
+  },
+  "version": "0.0.1"
+}
