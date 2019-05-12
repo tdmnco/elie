@@ -1,5 +1,6 @@
 {
   "author": "Kasper Tidemann",
+  "bin": "./src/cli.js",
   "bugs": {
     "url": "https://github.com/tdmnco/elie/issues"
   },
