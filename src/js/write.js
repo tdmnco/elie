@@ -4,8 +4,10 @@ const prettyBytes = require('pretty-bytes')
 const slugify = require('slugify')
 
 // Exports:
-module.exports = function write(files, args) {
-  console.log('')
+module.exports = function write(files, templates, args) {
+  const totalFiles = Object.keys(files).length
+
+  let filesWritten = 0
 
   for (let file of files) {
     if (!file.data.title) {
@@ -18,52 +20,22 @@ module.exports = function write(files, args) {
 
     let data = file.markdown
 
-    const header = new Promise((resolve) => {
-      if (args.header) {
-        fs.readFile(args.header, args.encoding, (error, header) => {
-          if (error) {
-            console.error(error)
-  
-            process.exit(1)
-          }
-  
-          data = header + data
+    data = templates.header + data + templates.footer
 
-          resolve()
-        })
-      } else {
-        resolve()
+    console.log('Writing ' + filename + ' (' + prettyBytes(file.markdown.length) + ')...')
+
+    fs.writeFile(filename, data, (error) => {
+      if (error) {
+        console.error(error)
+
+        process.exit(1)
       }
-    })
 
-    const footer = new Promise((resolve) => {
-      if (args.footer) {  
-        fs.readFile(args.footer, args.encoding, (error, footer) => {
-          if (error) {
-            console.error(error)
-  
-            process.exit(1)
-          }
-  
-          data = data + footer
+      filesWritten++
 
-          resolve()
-        })
-      } else {
-        resolve()
+      if (filesWritten === totalFiles) {
+        console.log('\nDone! ✅')
       }
-    })
-
-    Promise.all([header, footer]).then(() => {
-      console.log('Writing ' + filename + ' (' + prettyBytes(file.markdown.length) + ')')
-
-      fs.writeFile(filename, data, (error) => {
-        if (error) {
-          console.error(error)
-  
-          process.exit(1)
-        }
-      })  
     })
   }
 }

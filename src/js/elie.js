@@ -9,8 +9,8 @@ function elie() {
 
   const arguments = args(process.argv)
 
-  read(arguments).then((files) => {
-    write(files, arguments)
+  read(arguments).then((data) => {
+    write(data.files, data.templates, arguments)
   })
 }
 
