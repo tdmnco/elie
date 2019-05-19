@@ -13,6 +13,7 @@
     "eslint": "5.16.0",
     "glob": "7.1.4",
     "gray-matter": "4.0.2",
+    "html-minifier": "4.0.0",
     "jest": "24.8.0",
     "marked": "0.6.2",
     "npm": "6.9.0",

@@ -1,6 +1,8 @@
 // Requires:
 const fs = require('fs')
+const minify = require('html-minifier').minify;
 const prettyBytes = require('pretty-bytes')
+const replace = require('./replace')
 const slugify = require('slugify')
 
 // Exports:
@@ -18,9 +20,14 @@ module.exports = function write(files, templates, args) {
     
     const filename = args.output + '/' + slugify(file.data.title).toLowerCase() + '.html'
 
-    let data = file.markdown
+    let data = replace(templates.header + file.markdown + templates.footer, file.data)
 
-    data = templates.header + data + templates.footer
+    data = minify(data, {
+      collapseWhitespace: true,
+      removeComments: true,
+      removeEmptyAttributes: true,
+      removeTagWhitespace: true
+    })
 
     console.log('Writing ' + filename + ' (' + prettyBytes(file.markdown.length) + ')...')
 
