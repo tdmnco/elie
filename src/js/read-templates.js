@@ -19,24 +19,28 @@ module.exports = function readTemplates(args) {
       }
     }
 
-    totalTemplates = Object.keys(templatesToRead).length
+    if (templatesToRead.length === 0) {
+      resolve(templates)
+    } else {
+      totalTemplates = Object.keys(templatesToRead).length
 
-    for (let templateToRead of templatesToRead) {
-      fs.readFile(templateToRead.file, args.encoding, (error, data) => {
-        if (error) {
-          console.error(error)
+      for (let templateToRead of templatesToRead) {
+        fs.readFile(templateToRead.file, args.encoding, (error, data) => {
+          if (error) {
+            console.error(error)
+    
+            process.exit(1)
+          }
   
-          process.exit(1)
-        }
-
-        templates[templateToRead.template] = data
-
-        templatesRead++
-
-        if (templatesRead === totalTemplates) {
-          resolve(templates)
-        }
-      })
+          templates[templateToRead.template] = data
+  
+          templatesRead++
+  
+          if (templatesRead === totalTemplates) {
+            resolve(templates)
+          }
+        })
+      }  
     }
   })
 }

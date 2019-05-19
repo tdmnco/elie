@@ -24,12 +24,12 @@ $ npm install elie
 Using Elie is eloquent and easy. Consider the following example:
 
 ```shell
-$ elie blog-posts
+$ elie --input=markdown-posts --output=html-posts
 ```
 
-This will parse and convert all Markdown files in `blog-posts/` to HTML.
+This will parse and convert all Markdown files in the `markdown-posts` directory and save them to HTML in the `html-posts` directory.
 
-[↑ Back to top](#modeljs-)
+[↑ Back to top](#elie)
 
 ## Getting Help
 
