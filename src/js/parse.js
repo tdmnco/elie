@@ -16,10 +16,11 @@ module.exports = function parse(data, args) {
     for (let file of data.files) {
       const matter = grayMatter(file.content)
       const meta = matter.data
+      const parsedForEach = parseForEach(matter.content, file.path)
       
       file.meta = meta
 
-      replace(parseForEach(matter.content, file.path), file, args, header, footer).then((markdown) => {
+      replace(parsedForEach, file, args, header, footer).then((markdown) => {
         file.markdown = markdown
         file.html = marked(markdown)
 

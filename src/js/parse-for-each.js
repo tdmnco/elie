@@ -33,21 +33,34 @@ module.exports = function parseForEach(markdown, path) {
       let directory = markdown.slice(forEachStart, forEachEnd).replace('{{ for each ', '').replace(' }}', '').trim()
       let limit = 0
       let offset = 0
+      let sortBy = 'none'
+      let sortOrder = 'asc'
       
       if (directory.indexOf(' ') != -1) {
         const split = directory.split(' ')
-        const offsetLimit = split[1].split('-')
 
         directory = split[0]
-        limit = offsetLimit[1]
-        offset = offsetLimit[0]
+
+        for (let keyValue of split) {
+          keyValue = keyValue.split('=')
+
+          if (keyValue[0] === 'limit') {
+            limit = keyValue[1]
+          } else if (keyValue[0] === 'offset') {
+            offset = keyValue[1]
+          } else if (keyValue[0] === 'sortBy') {
+            sortBy = keyValue[1]
+          } else if (keyValue[0] === 'sortOrder') {
+            sortOrder = keyValue[1]
+          }
+        }
       } else if (directory === '}}') {
         console.error('{{ for each }} used without directory name in ' + path + ', aborting!')
       
         process.exit(1)
       }
 
-      forEaches.push({ directory, forEach, forEachCount, limit, offset })
+      forEaches.push({ directory, forEach, forEachCount, limit, offset, sortBy, sortOrder })
 
       markdown = markdown.replace(forEach, '<for-each-placeholder:' + forEachCount + '>')
     }

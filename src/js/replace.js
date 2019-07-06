@@ -4,12 +4,12 @@ const glob = require('glob')
 const grayMatter = require('gray-matter')
 
 // Exports:
-module.exports = function replace(parsed, file, args, header, footer) {
+module.exports = function replace(parsedForEach, file, args, header, footer) {
   const promises = []
 
   return new Promise((resolve) => {
-    for (let forEach of parsed.forEaches) {
-      promises.push(new Promise((innerResolve) => {
+    for (let forEach of parsedForEach.forEaches) {
+      promises.push(new Promise((innerResolve) => {        
         glob(file.directory + '/' + forEach.directory + '/*.md', function(error, files) {
           if (error) {
             console.error(error)
@@ -42,7 +42,7 @@ module.exports = function replace(parsed, file, args, header, footer) {
                 forEach.parsed = []
               }
 
-              forEach.parsed.push({ content: matter.content, count: readCount })
+              forEach.parsed.push({ content: matter.content, meta })
 
               readCount++
 
@@ -56,19 +56,19 @@ module.exports = function replace(parsed, file, args, header, footer) {
     }
 
     Promise.all(promises).then(() => {
-      for (let forEach of parsed.forEaches) {
-        forEach.parsed.sort((a, b) => {
-          return a.count >= b.count ? -1 : 1
-        })
-      }
+      let markdown = header + parsedForEach.markdown + footer
+      
+      for (let forEach of parsedForEach.forEaches) {
+        if (forEach.sortBy !== 'none') {
+          forEach.parsed.sort((a, b) => {
+            return a.meta[forEach.sort] < b.meta[forEach.sort] ? (forEach.sortOrder === 'asc' ? -1 : 1) : (forEach.sortOrder === 'asc' ? 1 : -1)
+          })
+        }
 
-      let markdown = header + parsed.markdown + footer
-            
-      for (let forEach of parsed.forEaches) {
         let replaced = ''
 
-        for (let parsedContent of forEach.parsed) {
-          replaced = replaced + parsedContent.content
+        for (let parsed of forEach.parsed) {
+          replaced = replaced + parsed.content
         }
 
         markdown = markdown.replace('<for-each-placeholder:' + forEach.forEachCount + '>', replaced)
