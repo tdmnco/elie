@@ -2,34 +2,35 @@
 const fs = require('fs')
 const minify = require('html-minifier').minify;
 const prettyBytes = require('pretty-bytes')
-const replace = require('./replace')
 const slugify = require('slugify')
 
 // Exports:
-module.exports = function write(files, templates, args) {
+module.exports = function write(files, args) {
   const totalFiles = Object.keys(files).length
 
-  let filesWritten = 0
+  let writeCount = 0
 
   for (let file of files) {
-    if (!file.data.title) {
-      console.error('\nNo title contained in the metadata for ' + file.path + ', aborting!')
+    const title = file.meta.title
+
+    let filename = file.meta.filename
+
+    if (!filename && !title) {
+      console.error('No filename or title contained in the metadata for ' + file.path + ', aborting!')
 
       process.exit(1)
     }
     
-    const filename = args.output + '/' + slugify(file.data.title).toLowerCase() + '.html'
+    filename = args.output + '/' + (slugify(file.meta.filename || file.meta.title).toLowerCase()) + '.html'
 
-    let data = replace(templates.header + file.markdown + templates.footer, file.data)
-
-    data = minify(data, {
+    const data = minify(file.html, {
       collapseWhitespace: true,
       removeComments: true,
       removeEmptyAttributes: true,
       removeTagWhitespace: true
     })
 
-    console.log('Writing ' + filename + ' (' + prettyBytes(file.markdown.length) + ')...')
+    console.log('Writing ' + filename + ' (' + prettyBytes(file.html.length) + ')...')
 
     fs.writeFile(filename, data, (error) => {
       if (error) {
@@ -38,9 +39,9 @@ module.exports = function write(files, templates, args) {
         process.exit(1)
       }
 
-      filesWritten++
+      writeCount++
 
-      if (filesWritten === totalFiles) {
+      if (writeCount === totalFiles) {
         console.log('\nDone! ✅')
       }
     })

@@ -1,57 +1,69 @@
 // Requires:
 const fs = require('fs')
 const glob = require('glob')
-const parse = require('./parse')
 const prettyBytes = require('pretty-bytes')
 
 // Exports:
 module.exports = function readFiles(args) {
-  const parsed = []
+  const filesRead = []
 
+  let input = args.input
+  let readCount = 0
   let totalBytes = 0
   let totalFiles = 0
-  let filesRead = 0
+
+  if (input.slice(-3) !== '.md') {
+    input = input + '/**/*.md'
+  }
 
   return new Promise((resolve) => {
-    glob(args.input + '/*.md', function(error, files) {
+    glob(input, function(error, files) {
       if (error) {
         console.error(error)
   
+        process.exit(1)
+      }
+
+      if (files.length === 0) {
+        console.error('No files to read in ' + input + ', aborting!')
+
         process.exit(1)
       }
   
       totalFiles = files.length
       
       for (let index in files) {
-        const file = files[index]
+        const path = files[index]
+        const split = path.split('/')
+
+        split.pop()
+
+        const directory = split.join('/')
   
-        fs.readFile(file, args.encoding, (error, data) => {
-          process.stdout.write('Processing ' + file)
+        fs.readFile(path, args.encoding, (error, content) => {
+          process.stdout.write('Processing ' + path)
 
           if (error) {
             console.error(error)
   
             process.exit(1)
           }
-  
-          data = parse(data)
 
-          data.path = file
-  
-          const bytes = data.bytes
+          const data = { content, directory, path }
+          const bytes = data.content.length
   
           totalBytes += bytes
   
-          filesRead++
+          readCount++
   
-          parsed.push(data)
+          filesRead.push(data)
 
-          process.stdout.write(' (' + prettyBytes(bytes) + ')...')
+          process.stdout.write(' (' + prettyBytes(bytes) + ')...\n')
   
-          if (filesRead === totalFiles) {
-            console.log('\n' + totalFiles + ' files read (' + prettyBytes(totalBytes) + ')\n')
+          if (readCount === totalFiles) {
+            console.log('\n' + totalFiles + ' file' + (totalFiles !== 1 ? 's' : '') + ' read (' + prettyBytes(totalBytes) + ')\n')
   
-            resolve(parsed)
+            resolve(filesRead)
           }        
         })
       }

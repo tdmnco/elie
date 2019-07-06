@@ -1,14 +1,14 @@
 ---
-date: 2019-10-01
+date: 2019-05-01
 description: A post written for testing purposes
-title: Post 2
+title: Post 1
 ---
 
-# Post 2
+# Post 1
 
-Hi there,
+Hi friend,
 
-Here is some content for post 2.
+Here is some content for {{ title }}.
 
 All the best,
 

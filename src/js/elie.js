@@ -1,16 +1,19 @@
 // Requires:
 const args = require('./args')
+const parse = require('./parse')
 const read = require('./read')
 const write = require('./write')
 
 // Functions:
 function elie() {
-  console.log('📝 Elie reporting in!\n')
+  console.log('📝 Elie is eloquent writing.\n')
 
-  const arguments = args(process.argv)
+  const parsed = args(process.argv)
 
-  read(arguments).then((data) => {
-    write(data.files, data.templates, arguments)
+  read(parsed).then((data) => {
+    parse(data, parsed).then((data) => {
+      write(data.files, parsed)
+    })
   })
 }
 

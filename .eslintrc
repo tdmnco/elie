@@ -5,7 +5,11 @@
     "es6": true,
     "jest": true
   },
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
   "rules": {
-    "no-console": 0
+    "no-console": 0,
+    "no-invalid-regexp": 1
   }
 }
