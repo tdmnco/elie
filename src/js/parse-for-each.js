@@ -52,9 +52,9 @@ module.exports = function parseForEach(markdown, path) {
             limit = keyValue[1]
           } else if (keyValue[0] === 'offset') {
             offset = keyValue[1]
-          } else if (keyValue[0] === 'sortBy') {
+          } else if (keyValue[0] === 'sort-by') {
             sortBy = keyValue[1]
-          } else if (keyValue[0] === 'sortOrder') {
+          } else if (keyValue[0] === 'sort-order') {
             sortOrder = keyValue[1]
           }
         }

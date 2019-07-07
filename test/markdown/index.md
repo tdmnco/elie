@@ -3,7 +3,7 @@ filename: index
 title: 'Kasper Tidemann'
 ---
 
-{{ for each posts offset=1 limit=5 sortBy=date sortOrder=desc }}
+{{ for each posts offset=1 limit=5 sort-by=date sort-order=desc }}
 
   {{ date }}
 

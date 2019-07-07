@@ -80,7 +80,7 @@ function replaceForEaches(file, data) {
       for (let forEach of file.forEaches) {
         if (forEach.sortBy !== 'none') {
           forEach.replaced.sort((a, b) => {
-            return a.meta[forEach.sort] < b.meta[forEach.sort] ? (forEach.sortOrder === 'asc' ? -1 : 1) : (forEach.sortOrder === 'asc' ? 1 : -1)
+            return a.meta[forEach.sortBy] < b.meta[forEach.sortBy] ? (forEach.sortOrder === 'asc' ? -1 : 1) : (forEach.sortOrder === 'asc' ? 1 : -1)
           })
         }
 
