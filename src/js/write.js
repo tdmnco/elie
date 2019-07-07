@@ -1,11 +1,14 @@
 // Requires:
 const fs = require('fs')
 const minify = require('html-minifier').minify;
+const mkdirp = require('mkdirp')
 const prettyBytes = require('pretty-bytes')
 const slugify = require('slugify')
 
 // Exports:
-module.exports = function write(files, args) {
+module.exports = function write(data) {
+  const args = data.args
+  const files = data.files
   const totalFiles = Object.keys(files).length
 
   let writeCount = 0
@@ -20,30 +23,40 @@ module.exports = function write(files, args) {
 
       process.exit(1)
     }
+
+    const directory = args.output + '/' + (file.directory.replace(args.input, '').slice(1))
     
-    filename = args.output + '/' + (slugify(file.meta.filename || file.meta.title).toLowerCase()) + '.html'
-
-    const data = minify(file.html, {
-      collapseWhitespace: true,
-      removeComments: true,
-      removeEmptyAttributes: true,
-      removeTagWhitespace: true
-    })
-
-    console.log('Writing ' + filename + ' (' + prettyBytes(file.html.length) + ')...')
-
-    fs.writeFile(filename, data, (error) => {
+    mkdirp(directory, (error) => {
       if (error) {
         console.error(error)
 
         process.exit(1)
       }
 
-      writeCount++
+      filename = directory + '/' + (slugify(file.meta.filename || file.meta.title).toLowerCase()) + '.html'
 
-      if (writeCount === totalFiles) {
-        console.log('\nDone! ✅')
-      }
+      const data = minify(file.html, {
+        collapseWhitespace: true,
+        removeComments: true,
+        removeEmptyAttributes: true,
+        removeTagWhitespace: true
+      })
+  
+      console.log('Writing ' + filename + ' (' + prettyBytes(file.html.length) + ')...')
+  
+      fs.writeFile(filename, data, (error) => {
+        if (error) {
+          console.error(error)
+  
+          process.exit(1)
+        }
+  
+        writeCount++
+  
+        if (writeCount === totalFiles) {
+          console.log('\nDone! ✅')
+        }
+      })
     })
   }
 }

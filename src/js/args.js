@@ -15,6 +15,10 @@ module.exports = function args(args) {
       parsed.encoding = arg.slice(11)
     } else if (substring === '--output=') {
       parsed.output = arg.slice(9)
+
+      if (parsed.output.slice(-1) === '/') {
+        parsed.output = parsed.output.slice(0, parsed.output.length - 1)
+      }
     } else if (substring === '--header=') {
       parsed.header = arg.slice(9)
     } else if (substring === '--footer=') {

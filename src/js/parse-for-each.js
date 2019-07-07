@@ -2,7 +2,7 @@
 module.exports = function parseForEach(markdown, path) {
   const forEaches = []
 
-  let forEachCount = 0
+  let count = 0
   let iterateForEach = true
 
   while (iterateForEach) {
@@ -41,6 +41,10 @@ module.exports = function parseForEach(markdown, path) {
 
         directory = split[0]
 
+        if (directory.slice(-1) === '/') {
+          directory = directory.slice(0, directory.length - 1)
+        }
+
         for (let keyValue of split) {
           keyValue = keyValue.split('=')
 
@@ -60,12 +64,12 @@ module.exports = function parseForEach(markdown, path) {
         process.exit(1)
       }
 
-      forEaches.push({ directory, forEach, forEachCount, limit, offset, sortBy, sortOrder })
+      forEaches.push({ count, directory, limit, markdown: forEach, offset, sortBy, sortOrder })
 
-      markdown = markdown.replace(forEach, '<for-each-placeholder:' + forEachCount + '>')
+      markdown = markdown.replace(forEach, '<for-each-placeholder:' + count + '>')
     }
 
-    forEachCount++
+    count++
   }
 
   return { forEaches, markdown }
