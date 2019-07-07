@@ -32,7 +32,7 @@ module.exports = function write(data) {
 
         process.exit(1)
       }
-
+      
       filename = directory + '/' + (slugify(file.meta.filename || file.meta.title).toLowerCase()) + '.html'
 
       const data = minify(file.html, {

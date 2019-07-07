@@ -3,6 +3,7 @@ const fs = require('fs')
 const glob = require('glob')
 const grayMatter = require('gray-matter')
 const marked = require('marked')
+const slugify = require('slugify')
 
 // Functions:
 function replaceForEaches(file, data) {
@@ -42,10 +43,18 @@ function replaceForEaches(file, data) {
               const matter = grayMatter(content)
               const meta = matter.data
 
+              forEach.path = forEach.directory + '/' + (slugify(meta.filename || meta.title).toLowerCase())
+
               let replaced = '' + markdown
   
               for (let key in meta) {
                 replaced = replaced.replace('{{ ' + key + ' }}', meta[key])
+              }
+
+              if (replaced.indexOf('{{ link to html }}') !== -1) {
+                let regex = new RegExp('{{ link to html }}', 'g')
+
+                replaced = replaced.replace(regex, forEach.path + '.html')
               }
 
               if (!forEach.replaced) {
@@ -90,6 +99,12 @@ function replaceForEaches(file, data) {
         let regex = new RegExp('{{ ' + key + ' }}', 'g')
 
         markdown = markdown.replace(regex, meta[key])
+      }
+
+      if (markdown.indexOf('{{ link to html }}') !== -1) {
+        let regex = new RegExp('{{ link to html }}', 'g')
+
+        markdown = markdown.replace(regex, file.directory.replace(data.args.input, '').slice(1) + '/' + (slugify(meta.filename || meta.title).toLowerCase()) + '.html')
       }
 
       resolve(markdown)

@@ -9,6 +9,6 @@ title: 'Kasper Tidemann'
 
   {{ description }}
   
-  <a href="/posts/post-1">{{ title }}</a>
+  <a href="{{ link to html }}">{{ title }}</a>
 
 {{ end }}
