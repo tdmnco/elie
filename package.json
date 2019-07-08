@@ -6,6 +6,7 @@
   },
   "description": "Elie is eloquent writing based on simple Markdown processing.",
   "dependencies": {
+    "glob": "7.1.4",
     "gray-matter": "4.0.2",
     "html-minifier": "4.0.0",
     "marked": "0.7.0",
@@ -19,7 +20,6 @@
     "@babel/preset-env": "7.5.0",
     "babel-eslint": "10.0.2",
     "eslint": "6.0.1",
-    "glob": "7.1.4",
     "jest": "24.8.0",
     "npm": "6.10.0"
   },
@@ -37,5 +37,5 @@
     "type": "git",
     "url": "git+https://github.com/tdmnco/elie.git"
   },
-  "version": "0.0.6"
+  "version": "0.0.7"
 }
