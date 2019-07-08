@@ -7,7 +7,7 @@ const write = require('./write')
 
 // Functions:
 function elie() {
-  console.log('📝 Elie is eloquent writing.\n')
+  console.log('✏️ Elie is eloquent writing.\n')
 
   const data = { args: args(process.argv) }
 

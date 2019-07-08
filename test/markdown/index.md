@@ -1,22 +1,20 @@
 ---
 filename: index
-title: 'Kasper Tidemann'
+title: 'Test'
 ---
 
 {{ for each posts offset=1 limit=5 sort-by=date sort-order=desc }}
 
-  <p>{{ date }}</p>
+  # {{ title }}
 
-  <p>{{ description }}</p>
-  
-  <a href="{{ link to html }}">{{ title }}</a>
+  ## {{ date }}
 
-  <a href="{{ link to folder }}">{{ title }}</a>
+  ### {{ description }}
 
-  Inner title: {{ title }}
+  [Link to folder]({{ link to folder }})
 
-  Inner title: {{ title }}
+  [Link to HTML]({{ link to html }})
 
 {{ end }}
 
-Title outside: {{ title }}
+#### {{ title }}
