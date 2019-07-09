@@ -11,6 +11,8 @@ title: 'Test'
 
   ### {{ description }}
 
+  {{ content }}
+
   [Link to folder]({{ link to folder }})
 
   [Link to HTML]({{ link to html }})

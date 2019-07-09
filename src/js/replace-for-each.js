@@ -50,6 +50,10 @@ module.exports = function replaceForEach(file, data) {
                 replaced = replaceRegex(replaced, '{{ ' + key + ' }}', meta[key])
               }
 
+              if (replaced.indexOf('{{ content }}') !== -1) {
+                replaced = replaceRegex(replaced, '{{ content }}', matter.content)
+              }
+
               if (replaced.indexOf('{{ link to folder }}') !== -1) {
                 replaced = replaceRegex(replaced, '{{ link to folder }}', forEach.location)
               }

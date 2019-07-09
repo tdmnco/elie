@@ -8,8 +8,6 @@ title: Post 3
 
 Hello there,
 
-Du har blommer! {{ link to html }}
-
 Here is some content for {{ title }}.
 
 All the best,
