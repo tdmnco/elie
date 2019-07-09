@@ -1,6 +1,7 @@
 // Requires:
 const fs = require('fs')
 const glob = require('glob')
+const path = require('path')
 const prettyBytes = require('pretty-bytes')
 
 // Exports:
@@ -17,7 +18,7 @@ module.exports = function readFiles(args) {
   }
 
   return new Promise((resolve) => {
-    glob(input, function(error, files) {
+    glob(path.join(input), function(error, files) {
       if (error) {
         console.error(error)
   
@@ -33,15 +34,15 @@ module.exports = function readFiles(args) {
       totalFiles = files.length
       
       for (let index in files) {
-        const path = files[index]
-        const split = path.split('/')
+        const location = files[index]
+        const split = location.split('/')
 
         split.pop()
 
         const directory = split.join('/')
   
-        fs.readFile(path, args.encoding, (error, content) => {
-          process.stdout.write('Processing ' + path)
+        fs.readFile(path.join(location), args.encoding, (error, content) => {
+          process.stdout.write('Processing ' + location)
 
           if (error) {
             console.error(error)
@@ -49,7 +50,7 @@ module.exports = function readFiles(args) {
             process.exit(1)
           }
 
-          const data = { content, directory, path }
+          const data = { content, directory, location }
           const bytes = data.content.length
   
           totalBytes += bytes

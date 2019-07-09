@@ -12,7 +12,7 @@ module.exports = function parse(data) {
     for (let file of data.files) {
       const matter = grayMatter(file.content)
       const meta = matter.data
-      const parsed = parseForEach(matter.content, file.path)
+      const parsed = parseForEach(matter.content, file.location)
       
       file.forEaches = parsed.forEaches
       file.markdown = parsed.markdown

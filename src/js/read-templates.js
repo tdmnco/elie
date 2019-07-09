@@ -1,5 +1,6 @@
 // Requires:
 const fs = require('fs')
+const path = require('path')
 
 // Exports:
 module.exports = function readTemplates(args) {
@@ -12,10 +13,10 @@ module.exports = function readTemplates(args) {
     const templatesToRead = []
 
     for (let template in templates) {
-      const file = args[template]
+      const location = args[template]
 
-      if (file) {
-        templatesToRead.push({ file, template })
+      if (location) {
+        templatesToRead.push({ location, template })
       }
     }
 
@@ -25,7 +26,7 @@ module.exports = function readTemplates(args) {
       totalTemplates = Object.keys(templatesToRead).length
 
       for (let templateToRead of templatesToRead) {
-        fs.readFile(templateToRead.file, args.encoding, (error, data) => {
+        fs.readFile(path.join(templateToRead.location), args.encoding, (error, data) => {
           if (error) {
             console.error(error)
     

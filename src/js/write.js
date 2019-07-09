@@ -2,6 +2,7 @@
 const fs = require('fs')
 const minify = require('html-minifier').minify;
 const mkdirp = require('mkdirp')
+const path = require('path')
 const prettyBytes = require('pretty-bytes')
 const slugify = require('slugify')
 
@@ -19,21 +20,21 @@ module.exports = function write(data) {
     let filename = file.meta.filename
 
     if (!filename && !title) {
-      console.error('No filename or title contained in the metadata for ' + file.path + ', aborting!')
+      console.error('No filename or title contained in the metadata for ' + file.location + ', aborting!')
 
       process.exit(1)
     }
 
     const directory = args.output + '/' + (file.directory.replace(args.input, '').slice(1))
     
-    mkdirp(directory, (error) => {
+    mkdirp(path.join(directory), (error) => {
       if (error) {
         console.error(error)
 
         process.exit(1)
       }
       
-      filename = directory + '/' + (slugify(file.meta.filename || file.meta.title).toLowerCase()) + '.html'
+      filename = path.join(directory + '/' + (slugify(file.meta.filename || file.meta.title).toLowerCase()) + '.html')
 
       const data = minify(file.html, {
         collapseWhitespace: true,

@@ -2,6 +2,7 @@
 const fs = require('fs')
 const glob = require('glob')
 const grayMatter = require('gray-matter')
+const path = require('path')
 const replaceRegex = require('./replace-regex')
 const slugify = require('slugify')
 
@@ -29,9 +30,9 @@ module.exports = function replaceForEach(file, data) {
           let readCount = 0
       
           for (let index in files) {
-            const path = files[index]
+            const location = files[index]
   
-            fs.readFile(path, data.args.encoding, (error, content) => {
+            fs.readFile(path.join(location), data.args.encoding, (error, content) => {
               if (error) {
                 console.error(error)
 
@@ -41,7 +42,7 @@ module.exports = function replaceForEach(file, data) {
               const matter = grayMatter(content)
               const meta = matter.data
 
-              forEach.path = forEach.directory + '/' + (slugify(meta.filename || meta.title).toLowerCase())
+              forEach.location = forEach.directory + '/' + (slugify(meta.filename || meta.title).toLowerCase())
 
               let replaced = '' + markdown
   
@@ -50,11 +51,11 @@ module.exports = function replaceForEach(file, data) {
               }
 
               if (replaced.indexOf('{{ link to folder }}') !== -1) {
-                replaced = replaceRegex(replaced, '{{ link to folder }}', forEach.path)
+                replaced = replaceRegex(replaced, '{{ link to folder }}', forEach.location)
               }
 
               if (replaced.indexOf('{{ link to html }}') !== -1) {
-                replaced = replaceRegex(replaced, '{{ link to html }}', forEach.path + '.html')
+                replaced = replaceRegex(replaced, '{{ link to html }}', forEach.location + '.html')
               }
 
               if (!forEach.replaced) {

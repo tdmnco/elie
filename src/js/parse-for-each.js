@@ -1,5 +1,5 @@
 // Exports:
-module.exports = function parseForEach(markdown, path) {
+module.exports = function parseForEach(markdown, location) {
   const forEaches = []
 
   let count = 0
@@ -10,7 +10,7 @@ module.exports = function parseForEach(markdown, path) {
     const end = markdown.indexOf('{{ end }}')
 
     if (forEachStart != -1 && end === -1) {
-      console.error('{{ for each }} missing an {{ end }} in ' + path + ', aborting!')
+      console.error('{{ for each }} missing an {{ end }} in ' + location + ', aborting!')
       
       process.exit(1)
     }
@@ -23,7 +23,7 @@ module.exports = function parseForEach(markdown, path) {
       const endEnd = endStart + 9
 
       if (endStart < forEachEnd) {
-        console.error('{{ end }} before {{ for each }} in ' + path + ', aborting!')
+        console.error('{{ end }} before {{ for each }} in ' + location + ', aborting!')
       
         process.exit(1)
       }
@@ -59,7 +59,7 @@ module.exports = function parseForEach(markdown, path) {
           }
         }
       } else if (directory === '}}') {
-        console.error('{{ for each }} used without directory name in ' + path + ', aborting!')
+        console.error('{{ for each }} used without directory name in ' + location + ', aborting!')
       
         process.exit(1)
       }
