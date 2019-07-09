@@ -11,7 +11,7 @@ module.exports = function replaceFile(file, data) {
   const header = data.templates.header
 
   return new Promise((resolve) => {
-    let markdown = header + file.markdown + footer
+    let markdown = header + '\n' + file.markdown + '\n' + footer
       
     for (let forEach of file.forEaches) {
       if (forEach.sortBy !== 'none') {
