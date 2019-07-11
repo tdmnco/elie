@@ -1,6 +1,7 @@
 // Requires:
 const grayMatter = require('gray-matter')
 const parseForEach = require('./parse-for-each')
+const parsePaginate = require('./parse-paginate')
 
 // Exports:
 module.exports = function parse(data) {
@@ -10,13 +11,16 @@ module.exports = function parse(data) {
   
   return new Promise((resolve) => {
     for (let file of data.files) {
+      const location = file.location
       const matter = grayMatter(file.content)
-      const meta = matter.data
-      const parsed = parseForEach(matter.content, file.location)
+      const meta = matter.data      
+      const parsedForEach = parseForEach(matter.content, location)
+      const parsedPaginate = parsePaginate(parsedForEach.markdown, location)
       
-      file.forEaches = parsed.forEaches
-      file.markdown = parsed.markdown
+      file.forEaches = parsedForEach.forEaches
+      file.markdown = parsedPaginate.markdown
       file.meta = meta
+      file.pagination = parsedPaginate.pagination
 
       filesRead++
       

@@ -38,7 +38,8 @@
     "url": "git+https://github.com/tdmnco/elie.git"
   },
   "scripts": {
-    "test:build": "node bin/js/cli.js --input=test/markdown --header=test/html/header.html --footer=test/html/footer.html --output=build"
+    "test:build": "node bin/js/cli.js --input=test/markdown --header=test/html/header.html --footer=test/html/footer.html --output=build",
+    "test:build-minify": "node bin/js/cli.js --input=test/markdown --header=test/html/header.html --footer=test/html/footer.html --output=build --minify=true"
   },
   "version": "0.0.9"
 }
