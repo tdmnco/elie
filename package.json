@@ -15,13 +15,13 @@
     "slugify": "1.3.4"
   },
   "devDependencies": {
-    "@babel/core": "7.5.0",
+    "@babel/core": "7.5.4",
     "@babel/plugin-transform-runtime": "7.5.0",
-    "@babel/preset-env": "7.5.2",
+    "@babel/preset-env": "7.5.4",
     "babel-eslint": "10.0.2",
     "eslint": "6.0.1",
     "jest": "24.8.0",
-    "npm": "6.10.0"
+    "npm": "6.10.1"
   },
   "homepage": "https://github.com/tdmnco/elie#readme",
   "keywords": [
