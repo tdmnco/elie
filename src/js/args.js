@@ -3,27 +3,25 @@ module.exports = function args(args) {
   const parsed = {
     encoding: 'utf8',
     input: '.',
+    minify: false,
     output: '.'
   }
 
   for (let arg of args) {
-    let substring = arg.substring(0, 9)
+    arg = arg.replace('--', '')
 
-    if (arg.substring(0, 8) === '--input=') {
-      parsed.input = arg.slice(8)
-    } else if (arg.substring(0, 11) === '--encoding=') {
-      parsed.encoding = arg.slice(11)
-    } else if (substring === '--output=') {
-      parsed.output = arg.slice(9)
+    const split = arg.split('=')
+    const key = split[0]
+    
+    let value = split[1]
 
-      if (parsed.output.slice(-1) === '/') {
-        parsed.output = parsed.output.slice(0, parsed.output.length - 1)
-      }
-    } else if (substring === '--header=') {
-      parsed.header = arg.slice(9)
-    } else if (substring === '--footer=') {
-      parsed.footer = arg.slice(9)
+    if ((key === 'input' || key === 'output') && value.slice(-1) === '/') {
+      value = value.slice(0, value.length - 1)
+    } else if (key === 'minify') {
+      value = value === 'true'
     }
+
+    parsed[key] = value
   }
 
   return parsed
