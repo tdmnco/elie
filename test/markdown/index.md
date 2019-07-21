@@ -3,7 +3,7 @@ filename: index
 title: 'Test'
 ---
 
-{{ yemen }}
+{{ paginate }}
 
 {{ for each posts offset=1 limit=5 sort-by=date sort-order=desc }}
 
@@ -29,6 +29,6 @@ title: 'Test'
 
 {{ link tag to next page }}
 
-
+{{ end }}
 
 #### {{ title }}
