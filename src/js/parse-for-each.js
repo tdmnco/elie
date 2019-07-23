@@ -18,7 +18,7 @@ module.exports = function parseForEach(markdown, location) {
     if (forEachStart === -1) {
       iterateForEach = false
     } else {
-      const forEachEnd = markdown.indexOf('}}', forEachStart) + 2      
+      const forEachEnd = markdown.indexOf('}}', forEachStart) + 2
       const endStart = markdown.indexOf('{{ end }}', forEachEnd)
       const endEnd = endStart + 9
 
