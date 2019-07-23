@@ -26,7 +26,7 @@ module.exports = function replaceFile(file, data) {
         content = content + replaced.content
       }
 
-      markdown = markdown.replace('<for-each-placeholder:' + forEach.count + '>', content)
+      markdown = markdown.replace(forEach.placeholder, content)
     }
 
     for (let key in meta) {

@@ -24,9 +24,25 @@ module.exports = function write(data) {
 
       process.exit(1)
     }
-
-    const directory = args.output + '/' + (file.directory.replace(args.input, '').slice(1))
     
+    let input = args.input
+
+    if (input.slice(-3) === '.md') {
+      const split = input.split('/')
+
+      split.pop()
+
+      input = split.join('/')
+    }
+
+    let directory = file.directory.replace(input, '')
+
+    if (directory.slice(0, 1) === '/') {
+      directory = directory.slice(1)
+    }
+
+    directory = args.output + '/' + directory
+
     mkdirp(path.join(directory), (error) => {
       if (error) {
         console.error(error)
@@ -47,7 +63,7 @@ module.exports = function write(data) {
         })
       }
       
-      console.log('Writing ' + filename + ' (' + prettyBytes(file.html.length) + ')...')
+      console.log('Writing ' + filename + ' (' + prettyBytes(data.length) + ')...')
   
       fs.writeFile(filename, data, (error) => {
         if (error) {

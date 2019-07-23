@@ -7,7 +7,7 @@ module.exports = function parseForEach(markdown, location) {
 
   while (iterateForEach) {
     const forEachStart = markdown.indexOf('{{ for each ')
-    const end = markdown.indexOf('{{ end }}')
+    const end = markdown.indexOf('{{ end }}', forEachStart)
 
     if (forEachStart != -1 && end === -1) {
       console.error('{{ for each }} missing an {{ end }} in ' + location + ', aborting!')
@@ -64,9 +64,11 @@ module.exports = function parseForEach(markdown, location) {
         process.exit(1)
       }
 
-      forEaches.push({ count, directory, limit, markdown: forEach, offset, sortBy, sortOrder })
+      const placeholder = '<for-each-placeholder:' + count + '>'
 
-      markdown = markdown.replace(forEach, '<for-each-placeholder:' + count + '>')
+      forEaches.push({ directory, limit, markdown: forEach, offset, placeholder, sortBy, sortOrder })
+
+      markdown = markdown.replace(forEach, placeholder)
     }
 
     count++

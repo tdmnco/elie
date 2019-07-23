@@ -1,13 +1,12 @@
 // Exports:
-module.exports = function parsePaginate(parsedForEach, location) {
-  const markdown = parsedForEach.markdown
+module.exports = function parsePaginate(markdown, forEaches, location) {
   const paginateStart = markdown.indexOf('{{ paginate ')
 
   if (paginateStart === -1) {
-    return { pagination, markdown }
+    return { forEaches, markdown }
   }
 
-  const end = markdown.indexOf('{{ end }}')
+  const end = markdown.indexOf('{{ end }}', paginateStart)
 
   if (paginateStart != -1 && end === -1) {
     console.error('{{ paginate }} missing an {{ end }} in ' + location + ', aborting!')
@@ -24,11 +23,18 @@ module.exports = function parsePaginate(parsedForEach, location) {
   
     process.exit(1)
   }
+
+  if (!/<for-each-placeholder:/.test(markdown.slice(paginateEnd, endStart))) {
+    console.error('{{ paginate }} used without {{ for each }} in ' + location + ', aborting!')
   
-  const pagination = parseInt(markdown.slice(paginateStart, paginateEnd).replace('{{ paginate ', '').replace(' }}', '').trim(), 10)
+    process.exit(1)
+  }
 
-  //console.log('show per page', perPage)
-  //console.log('at this point, markdown is', markdown)
+  for (let forEach of forEaches) {
+    if (markdown.indexOf(forEach.placeholder) > -1) {
+      forEach.paginate = true
+    }
+  }
 
-  return { pagination, markdown }
+  return { forEaches, markdown }
 }

@@ -13,14 +13,13 @@ module.exports = function parse(data) {
     for (let file of data.files) {
       const location = file.location
       const matter = grayMatter(file.content)
-      const meta = matter.data      
+      const meta = matter.data
       const parsedForEach = parseForEach(matter.content, location)
-      const parsedPaginate = parsePaginate(parsedForEach, location)
+      const parsedPaginate = parsePaginate(parsedForEach.markdown, parsedForEach.forEaches, location)
       
-      file.forEaches = parsedForEach.forEaches
+      file.forEaches = parsedPaginate.forEaches
       file.markdown = parsedPaginate.markdown
       file.meta = meta
-      file.pagination = parsedPaginate.pagination
 
       filesRead++
       

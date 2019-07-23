@@ -3,7 +3,7 @@ filename: index
 title: 'Test'
 ---
 
-{{ paginate 5 }}
+{{ paginate }}
 
 {{ for each posts offset=1 limit=5 sort-by=date sort-order=desc }}
 
