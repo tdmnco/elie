@@ -41,8 +41,7 @@ module.exports = function replaceForEach(file, data) {
   
               const matter = grayMatter(content)
               const meta = matter.data
-
-              forEach.location = forEach.directory + '/' + (slugify(meta.filename || meta.title).toLowerCase())
+              const location = forEach.directory + '/' + (slugify(meta.filename || meta.title).toLowerCase())
 
               let replaced = '' + markdown
   
@@ -55,11 +54,11 @@ module.exports = function replaceForEach(file, data) {
               }
 
               if (replaced.indexOf('{{ link to folder }}') !== -1) {
-                replaced = replaceRegex(replaced, '{{ link to folder }}', forEach.location)
+                replaced = replaceRegex(replaced, '{{ link to folder }}', location)
               }
 
               if (replaced.indexOf('{{ link to html }}') !== -1) {
-                replaced = replaceRegex(replaced, '{{ link to html }}', forEach.location + '.html')
+                replaced = replaceRegex(replaced, '{{ link to html }}', location + '.html')
               }
 
               if (!forEach.replaced) {
