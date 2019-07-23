@@ -20,6 +20,10 @@ module.exports = function replaceFile(file, data) {
         })
       }
 
+      if (forEach.offset && forEach.limit) {
+        forEach.replaced = forEach.replaced.slice(forEach.offset - 1, forEach.limit)
+      }
+      
       let content = ''
 
       for (let replaced of forEach.replaced) {

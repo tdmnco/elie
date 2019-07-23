@@ -31,8 +31,8 @@ module.exports = function parseForEach(markdown, location) {
       const forEach = markdown.slice(forEachStart, endEnd)
       
       let directory = markdown.slice(forEachStart, forEachEnd).replace('{{ for each ', '').replace(' }}', '').trim()
-      let limit = 0
-      let offset = 0
+      let limit = null
+      let offset = null
       let sortBy = 'none'
       let sortOrder = 'asc'
       
@@ -60,6 +60,18 @@ module.exports = function parseForEach(markdown, location) {
         }
       } else if (directory === '}}') {
         console.error('{{ for each }} used without directory name in ' + location + ', aborting!')
+      
+        process.exit(1)
+      }
+
+      if (limit !== null && limit < 1) {
+        console.error('{{ for each }} contains offset lower than 1 in ' + location + ', aborting!')
+      
+        process.exit(1)
+      }
+
+      if (offset !== null && offset < 1) {
+        console.error('{{ for each }} contains offset lower than 1 in ' + location + ', aborting!')
       
         process.exit(1)
       }

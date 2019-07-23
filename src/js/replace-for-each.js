@@ -17,14 +17,14 @@ module.exports = function replaceForEach(file, data) {
       markdown = markdown.substring(markdown.indexOf('}}') + 2)
       markdown = markdown.replace('{{ end }}', '')
 
-      promises.push(new Promise((innerResolve) => {        
+      promises.push(new Promise((innerResolve) => {
         glob(file.directory + '/' + forEach.directory + '/*.md', function(error, files) {
           if (error) {
             console.error(error)
       
             process.exit(1)
           }
-  
+
           const totalFiles = files.length
   
           let readCount = 0
