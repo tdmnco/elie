@@ -12,16 +12,19 @@ module.exports = function replaceFile(file, data) {
 
   return new Promise((resolve) => {
     let markdown = header + '\n' + file.markdown + '\n' + footer
-      
-    for (let forEach of file.forEaches) {
+
+    for (let forEach of file.forEaches) {  
       if (forEach.sortBy !== 'none') {
         forEach.replaced.sort((a, b) => {
           return a.meta[forEach.sortBy] < b.meta[forEach.sortBy] ? (forEach.sortOrder === 'asc' ? -1 : 1) : (forEach.sortOrder === 'asc' ? 1 : -1)
         })
       }
 
-      if (forEach.offset && forEach.limit) {
-        forEach.replaced = forEach.replaced.slice(forEach.offset - 1, forEach.limit)
+      let offset = forEach.offset
+      let limit = forEach.limit
+
+      if (limit && offset) {
+        forEach.replaced = forEach.replaced.slice(offset - 1, limit)
       }
       
       let content = ''
