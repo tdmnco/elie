@@ -1,7 +1,6 @@
 // Requires:
-const marked = require('marked')
-const replaceFile = require('./replace-file')
 const replaceForEach = require('./replace-for-each')
+const replacePaginate = require('./replace-paginate')
 
 // Exports:
 module.exports = function replace(data) {
@@ -12,9 +11,8 @@ module.exports = function replace(data) {
   return new Promise((resolve) => {
     for (let file of data.files) {
       replaceForEach(file, data).then(() => {
-        replaceFile(file, data).then((markdown) => {
-          file.markdown = markdown
-          file.html = marked(markdown)
+        replacePaginate(file, data).then((paginate) => {
+          file.paginate = paginate
       
           filesRead++
           

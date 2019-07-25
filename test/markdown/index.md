@@ -5,7 +5,7 @@ title: 'Test'
 
 {{ paginate }}
 
-{{ for each posts offset=1 limit=5 sort-by=date sort-order=desc }}
+{{ for each posts offset=1 limit=2 sort-by=date sort-order=desc }}
 
 # {{ title }}
 
@@ -30,5 +30,3 @@ title: 'Test'
 {{ link tag to next page }}
 
 {{ end }}
-
-#### {{ title }}

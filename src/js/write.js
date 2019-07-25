@@ -10,9 +10,13 @@ const slugify = require('slugify')
 module.exports = function write(data) {
   const args = data.args
   const files = data.files
-  const totalFiles = Object.keys(files).length
-
+  
+  let totalFiles = 0
   let writeCount = 0
+
+  for (let file of files) {
+    totalFiles += file.paginate.length
+  }
 
   for (let file of files) {
     const title = file.meta.title
@@ -49,35 +53,39 @@ module.exports = function write(data) {
 
         process.exit(1)
       }
-      
-      filename = path.join(directory + '/' + (slugify(file.meta.filename || file.meta.title).toLowerCase()) + '.html')
 
-      let data = file.html
-      
-      if (args.minify || typeof args.minify === 'undefined') {
-        data = minify(data, {
-          collapseWhitespace: true,
-          removeComments: true,
-          removeEmptyAttributes: true,
-          removeTagWhitespace: true
+      for (let paginate of file.paginate) {
+        const page = paginate.page === 0 ? '' : '-' + paginate.page
+
+        filename = path.join(directory + '/' + (slugify(file.meta.filename || file.meta.title).toLowerCase()) + page + '.html')
+
+        let data = paginate.html
+        
+        if (args.minify || typeof args.minify === 'undefined') {
+          data = minify(data, {
+            collapseWhitespace: true,
+            removeComments: true,
+            removeEmptyAttributes: true,
+            removeTagWhitespace: true
+          })
+        }
+        
+        console.log('Writing ' + filename + ' (' + prettyBytes(data.length) + ')...')
+    
+        fs.writeFile(filename, data, (error) => {
+          if (error) {
+            console.error(error)
+    
+            process.exit(1)
+          }
+    
+          writeCount++
+    
+          if (writeCount === totalFiles) {
+            console.log('\nDone! ✅')
+          }
         })
       }
-      
-      console.log('Writing ' + filename + ' (' + prettyBytes(data.length) + ')...')
-  
-      fs.writeFile(filename, data, (error) => {
-        if (error) {
-          console.error(error)
-  
-          process.exit(1)
-        }
-  
-        writeCount++
-  
-        if (writeCount === totalFiles) {
-          console.log('\nDone! ✅')
-        }
-      })
     })
   }
 }
