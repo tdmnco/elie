@@ -7,22 +7,22 @@ module.exports = function parsePaginate(markdown, forEaches, location) {
   }
 
   const paginateStart = markdown.indexOf('{{ paginate ')
+  const paginateEnd = markdown.indexOf('}}', paginateStart) + 2
+  const paginate = markdown.slice(paginateStart, paginateEnd)
 
   if (paginateStart === -1) {
     return { forEaches, markdown }
   }
 
-  const end = markdown.indexOf('{{ end }}', paginateStart)
+  const endStart = markdown.indexOf('{{ end }}', paginateEnd)
+  const endEnd = endStart + 9
+  const end = markdown.slice(endStart, endEnd)
 
-  if (paginateStart != -1 && end === -1) {
+  if (paginateStart != -1 && endStart === -1) {
     console.error('{{ paginate }} missing an {{ end }} in ' + location + ', aborting!')
     
     process.exit(1)
   }
-
-  const paginateEnd = markdown.indexOf('}}', paginateStart) + 2
-  const endStart = markdown.indexOf('{{ end }}', paginateEnd)
-  const endEnd = endStart + 9
 
   if (endStart < paginateEnd) {
     console.error('{{ end }} before {{ paginate }} in ' + location + ', aborting!')
@@ -41,6 +41,9 @@ module.exports = function parsePaginate(markdown, forEaches, location) {
       forEach.paginate = true
     }
   }
+
+  markdown = markdown.replace(paginate, '')
+  markdown = markdown.replace(end, '')
 
   return { forEaches, markdown }
 }
