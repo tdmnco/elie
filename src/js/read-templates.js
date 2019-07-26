@@ -16,7 +16,7 @@ module.exports = function readTemplates(args) {
       const location = args[template]
 
       if (location) {
-        templatesToRead.push({ location, template })
+        templatesToRead.push({ input: { location }, template })
       }
     }
 
@@ -26,7 +26,7 @@ module.exports = function readTemplates(args) {
       totalTemplates = Object.keys(templatesToRead).length
 
       for (let templateToRead of templatesToRead) {
-        fs.readFile(path.join(templateToRead.location), args.encoding, (error, data) => {
+        fs.readFile(path.join(templateToRead.input.location), args.encoding, (error, data) => {
           if (error) {
             console.error(error)
     

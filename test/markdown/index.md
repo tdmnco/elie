@@ -15,7 +15,7 @@ title: 'Test'
 
 {{ content }}
 
-[Link to folder]({{ link to folder }})
+[Link to directory]({{ link to directory }})
 
 [Link to HTML]({{ link to html }})
 

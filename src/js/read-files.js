@@ -35,7 +35,7 @@ module.exports = function readFiles(args) {
       
       for (let index in files) {
         const location = files[index]
-        const split = location.split('/')
+        const split = input.split('/')
 
         split.pop()
 
@@ -50,7 +50,7 @@ module.exports = function readFiles(args) {
             process.exit(1)
           }
 
-          const data = { content, directory, location }
+          const data = { content, input: { directory, location } }
           const bytes = data.content.length
   
           totalBytes += bytes

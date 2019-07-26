@@ -1,13 +1,11 @@
 // Requires:
 const marked = require('marked')
 const replaceRegex = require('./replace-regex')
-const slugify = require('slugify')
 
 // Exports:
 module.exports = function replacePaginate(file, data) {
-  const args = data.args
   const meta = file.meta
-  const folder = file.directory.replace(args.input, '').slice(1) + '/' + (slugify(meta.filename || meta.title).toLowerCase())
+  const location = file.output.location
   const footer = data.templates.footer
   const header = data.templates.header
   
@@ -15,7 +13,7 @@ module.exports = function replacePaginate(file, data) {
     const paginate = []
     const skeleton = header + '\n' + file.markdown + '\n' + footer
 
-    for (let forEach of file.forEaches) {  
+    for (let forEach of file.forEaches) {
       if (forEach.sortBy !== 'none') {
         forEach.replaced.sort((a, b) => {
           return a.meta[forEach.sortBy] < b.meta[forEach.sortBy] ? (forEach.sortOrder === 'asc' ? -1 : 1) : (forEach.sortOrder === 'asc' ? 1 : -1)
@@ -41,12 +39,12 @@ module.exports = function replacePaginate(file, data) {
           markdown = replaceRegex(markdown, '{{ ' + key + ' }}', meta[key])
         }
     
-        if (markdown.indexOf('{{ link to folder }}') !== -1) {
-          markdown = replaceRegex(markdown, '{{ link to folder }}', folder)
+        if (markdown.indexOf('{{ link to directory }}') !== -1) {
+          markdown = replaceRegex(markdown, '{{ link to directory }}', location)
         }
     
         if (markdown.indexOf('{{ link to html }}') !== -1) {
-          markdown = replaceRegex(markdown, '{{ link to folder }}', folder + '.html')
+          markdown = replaceRegex(markdown, '{{ link to html }}', location + '.html')
         }
 
         paginate.push({ html: marked(markdown), markdown, page })

@@ -18,7 +18,7 @@ module.exports = function replaceForEach(file, data) {
       markdown = markdown.replace('{{ end }}', '')
 
       promises.push(new Promise((innerResolve) => {
-        glob(file.directory + '/' + forEach.directory + '/*.md', function(error, files) {
+        glob(file.input.directory + '/' + forEach.directory + '/*.md', function(error, files) {
           if (error) {
             console.error(error)
       
@@ -30,7 +30,7 @@ module.exports = function replaceForEach(file, data) {
           let readCount = 0
       
           for (let index in files) {
-            const location = files[index]
+            let location = files[index]
   
             fs.readFile(path.join(location), data.args.encoding, (error, content) => {
               if (error) {
@@ -41,7 +41,16 @@ module.exports = function replaceForEach(file, data) {
   
               const matter = grayMatter(content)
               const meta = matter.data
-              const location = forEach.directory + '/' + (slugify(meta.filename || meta.title).toLowerCase())
+              const filename = meta.filename
+              const title = meta.title
+
+              if (!filename && !title) {
+                console.error('No filename or title contained in the metadata for ' + file.input.location + ', aborting!')
+            
+                process.exit(1)
+              }
+
+              location = forEach.directory + '/' + (slugify(filename || title).toLowerCase())
 
               let replaced = '' + markdown
   
