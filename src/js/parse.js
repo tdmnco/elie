@@ -25,7 +25,7 @@ module.exports = function parse(data) {
       file.output = parsedOutput
 
       filesRead++
-      
+
       if (filesRead === totalFiles) {
         resolve(data)
       }

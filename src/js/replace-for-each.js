@@ -62,8 +62,8 @@ module.exports = function replaceForEach(file, data) {
                 replaced = replaceRegex(replaced, '{{ content }}', matter.content)
               }
 
-              if (replaced.indexOf('{{ link to folder }}') !== -1) {
-                replaced = replaceRegex(replaced, '{{ link to folder }}', location)
+              if (replaced.indexOf('{{ link to directory }}') !== -1) {
+                replaced = replaceRegex(replaced, '{{ link to directory }}', location)
               }
 
               if (replaced.indexOf('{{ link to html }}') !== -1) {

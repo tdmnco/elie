@@ -21,12 +21,8 @@ title: 'Test'
 
 {{ end }}
 
-[Previous page]({{ link to previous page }})
+[Previous page]({{ link to previous page html }})
 
-[Next page]({{ link to next page }})
-
-{{ link tag to previous page }}
-
-{{ link tag to next page }}
+[Next page]({{ link to next page html }})
 
 {{ end }}

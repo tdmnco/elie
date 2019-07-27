@@ -47,6 +47,18 @@ module.exports = function replacePaginate(file, data) {
           markdown = replaceRegex(markdown, '{{ link to html }}', location + '.html')
         }
 
+        const slug = file.output.slug
+        const previousPage = page < 1 ? '' : slug + '-' + (page - 1) + '.html'
+        const nextPage = page + 1 >= pages ? '' : slug + '-' + (page + 1) + '.html'
+
+        if (markdown.indexOf('{{ link to next page html }}') !== -1) {
+          markdown = replaceRegex(markdown, '{{ link to next page html }}', nextPage)
+        }
+
+        if (markdown.indexOf('{{ link to previous page html }}') !== -1) {
+          markdown = replaceRegex(markdown, '{{ link to previous page html }}', previousPage)
+        }
+
         paginate.push({ html: marked(markdown), markdown, page })
 
         offset = offset + limit

@@ -1,6 +1,8 @@
 // Exports:
 module.exports = function parsePaginate(markdown, forEaches, location) {
-  if (markdown.match(/{{ paginate/gi).length > 1) {
+  const match = markdown.match(/{{ paginate/gi)
+
+  if (match && match.length > 1) {
     console.error('Multiple uses of {{ paginate }} is not supported in ' + location + ', aborting!')
     
     process.exit(1)
