@@ -5,7 +5,7 @@ title: 'Test'
 
 {{ paginate }}
 
-{{ for each posts offset=1 limit=2 sort-by=date sort-order=desc }}
+{{ for each posts offset=1 limit=1 sort-by=date sort-order=desc }}
 
 # {{ title }}
 
@@ -19,10 +19,18 @@ title: 'Test'
 
 [Link to HTML]({{ link to html }})
 
-{{ end }}
+{{ end for each }}
 
-[Previous page]({{ link to previous page html }})
+{{ if previous page }}
 
-[Next page]({{ link to next page html }})
+[Previous page](/archive/{{ previous page number }})
 
-{{ end }}
+{{ end if previous page }}
+
+{{ if next page }}
+
+[Next page](/archive/{{ next page number }})
+
+{{ end if next page }}
+
+{{ end paginate }}

@@ -15,7 +15,7 @@ module.exports = function replaceForEach(file, data) {
       let markdown = forEach.markdown
 
       markdown = markdown.substring(markdown.indexOf('}}') + 2)
-      markdown = markdown.replace('{{ end }}', '')
+      markdown = markdown.replace('{{ end for each }}', '')
 
       promises.push(new Promise((innerResolve) => {
         glob(file.input.directory + '/' + forEach.directory + '/*.md', function(error, files) {

@@ -16,18 +16,18 @@ module.exports = function parsePaginate(markdown, forEaches, location) {
     return { forEaches, markdown }
   }
 
-  const endStart = markdown.indexOf('{{ end }}', paginateEnd)
-  const endEnd = endStart + 9
+  const endStart = markdown.indexOf('{{ end paginate }}', paginateEnd)
+  const endEnd = endStart + 18
   const end = markdown.slice(endStart, endEnd)
 
   if (paginateStart != -1 && endStart === -1) {
-    console.error('{{ paginate }} missing an {{ end }} in ' + location + ', aborting!')
+    console.error('{{ paginate }} missing an {{ end paginate }} in ' + location + ', aborting!')
     
     process.exit(1)
   }
 
   if (endStart < paginateEnd) {
-    console.error('{{ end }} before {{ paginate }} in ' + location + ', aborting!')
+    console.error('{{ end paginate }} before {{ paginate }} in ' + location + ', aborting!')
   
     process.exit(1)
   }

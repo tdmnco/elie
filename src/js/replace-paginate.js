@@ -47,17 +47,66 @@ module.exports = function replacePaginate(file, data) {
           markdown = replaceRegex(markdown, '{{ link to html }}', location + '.html')
         }
 
-        const slug = file.output.slug
-        const previousPage = page < 1 ? '' : slug + '-' + (page - 1) + '.html'
-        const nextPage = page + 1 >= pages ? '' : slug + '-' + (page + 1) + '.html'
+        const previousPage = page - 1
+        const nextPage = page + 1
 
-        if (markdown.indexOf('{{ link to next page html }}') !== -1) {
-          markdown = replaceRegex(markdown, '{{ link to next page html }}', nextPage)
+        if (markdown.indexOf('{{ next page number }}') !== -1) {
+          markdown = replaceRegex(markdown, '{{ next page number }}', nextPage)
         }
 
-        if (markdown.indexOf('{{ link to previous page html }}') !== -1) {
-          markdown = replaceRegex(markdown, '{{ link to previous page html }}', previousPage)
+        if (markdown.indexOf('{{ previous page number }}') !== -1) {
+          markdown = replaceRegex(markdown, '{{ previous page number }}', previousPage)
         }
+
+        const endIfNextPageStart = markdown.indexOf('{{ end if next page }}')
+        const ifNextPageStart = markdown.indexOf('{{ if next page }}')
+        
+        if (ifNextPageStart && !endIfNextPageStart) {
+          console.error('{{ if next page }} used without {{ end if next page }} in ' + file.input.location + ', aborting!')
+            
+          process.exit(1)
+        }
+
+        if (!ifNextPageStart && endIfNextPageStart) {
+          console.error('{{ end if next page }} used without {{ if next page }} in ' + file.input.location + ', aborting!')
+            
+          process.exit(1)
+        }
+
+        if (ifNextPageStart !== -1 && nextPage === pages) {
+          const before = markdown.slice(0, ifNextPageStart)
+          const after = markdown.slice(endIfNextPageStart + 22)
+          
+          markdown = before + after
+        }
+
+        markdown = replaceRegex(markdown, '{{ if next page }}', '')
+        markdown = replaceRegex(markdown, '{{ end if next page }}', '')
+
+        const endIfPreviousPageStart = markdown.indexOf('{{ end if previous page }}')
+        const ifPreviousPageStart = markdown.indexOf('{{ if previous page }}')
+        
+        if (ifPreviousPageStart && !endIfPreviousPageStart) {
+          console.error('{{ if previous page }} used without {{ end if previous page }} in ' + file.input.location + ', aborting!')
+            
+          process.exit(1)
+        }
+
+        if (!ifPreviousPageStart && endIfPreviousPageStart) {
+          console.error('{{ end if previous page }} used without {{ if previous page }} in ' + file.input.location + ', aborting!')
+            
+          process.exit(1)
+        }
+
+        if (ifPreviousPageStart !== -1 && previousPage === -1) {
+          const before = markdown.slice(0, ifPreviousPageStart)
+          const after = markdown.slice(endIfPreviousPageStart + 26)
+          
+          markdown = before + after
+        }
+
+        markdown = replaceRegex(markdown, '{{ if previous page }}', '')
+        markdown = replaceRegex(markdown, '{{ end if previous page }}', '')
 
         paginate.push({ html: marked(markdown), markdown, page })
 

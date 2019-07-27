@@ -17,11 +17,7 @@ module.exports = function write(data) {
     totalFiles += file.paginate.length
   }
 
-  console.log('3132525')
-
   for (let file of files) {
-    console.log('FEJLEN ER HER!', file.output.directory)
-
     mkdirp(path.join(file.output.directory), (error) => {
       if (error) {
         console.error(error)
@@ -29,12 +25,9 @@ module.exports = function write(data) {
         process.exit(1)
       }
 
-      console.log('DRUER')
-
       for (let paginate of file.paginate) {
         const page = paginate.page === 0 ? '' : '-' + paginate.page
-
-        filename = path.join(file.output.location + page + '.html')
+        const filename = path.join(file.output.location + page + '.html')
 
         let data = paginate.html
         
