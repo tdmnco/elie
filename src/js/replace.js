@@ -11,9 +11,9 @@ module.exports = function replace(data) {
   return new Promise((resolve) => {
     for (let file of data.files) {
       replaceForEach(file, data).then(() => {
-        replacePaginate(file, data).then((paginate) => {
-          file.paginate = paginate
-      
+        replacePaginate(file, data).then((paginated) => {
+          file.markdown = paginated
+
           filesRead++
           
           if (filesRead === totalFiles) {

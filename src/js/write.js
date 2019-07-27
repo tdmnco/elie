@@ -14,7 +14,7 @@ module.exports = function write(data) {
   let writeCount = 0
 
   for (let file of files) {
-    totalFiles += file.paginate.length
+    totalFiles += file.markdown.length
   }
 
   for (let file of files) {
@@ -25,11 +25,16 @@ module.exports = function write(data) {
         process.exit(1)
       }
 
-      for (let paginate of file.paginate) {
-        const page = paginate.page === 0 ? '' : '-' + paginate.page
-        const filename = path.join(file.output.location + page + '.html')
+      for (let markdown of file.markdown) {
+        let filename = file.output.location
 
-        let data = paginate.html
+        if (markdown.paginated) {
+          filename = filename + (markdown.page === 0 ? '' : '-' + markdown.page)
+        }
+
+        filename = path.join(filename + '.html')
+        
+        let data = markdown.html
         
         if (args.minify || typeof args.minify === 'undefined') {
           data = minify(data, {

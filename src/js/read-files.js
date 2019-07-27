@@ -35,7 +35,7 @@ module.exports = function readFiles(args) {
       
       for (let index in files) {
         const location = files[index]
-        const split = input.split('/')
+        const split = location.split('/')
 
         split.pop()
 

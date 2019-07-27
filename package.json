@@ -40,6 +40,7 @@
   "scripts": {
     "test:build": "node bin/js/cli.js --input=test/markdown --header=test/html/header.html --footer=test/html/footer.html --output=build",
     "test:build:index": "node bin/js/cli.js --input=test/markdown/index.md --header=test/html/header.html --footer=test/html/footer.html --output=build",
+    "test:build:posts": "node bin/js/cli.js --input=test/markdown/posts --header=test/html/header.html --footer=test/html/footer.html --output=build",
     "test:build-minify": "node bin/js/cli.js --input=test/markdown --header=test/html/header.html --footer=test/html/footer.html --output=build --minify=true",
     "test:build-minify:index": "node bin/js/cli.js --input=test/markdown/index.md --header=test/html/header.html --footer=test/html/footer.html --output=build --minify=true"
   },
