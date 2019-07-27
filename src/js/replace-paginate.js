@@ -25,7 +25,7 @@ module.exports = function replacePaginate(file, data) {
       let offset = forEach.offset - 1
 
       for (let page = 0; page < pages; page++) {
-        const pagination = forEach.replaced.slice(offset, limit)
+        const pagination = forEach.replaced.slice(offset, offset + limit)
 
         let content = ''
 
@@ -111,7 +111,6 @@ module.exports = function replacePaginate(file, data) {
         paginate.push({ html: marked(markdown), markdown, page })
 
         offset = offset + limit
-        limit = limit + limit
       }
     }
 
