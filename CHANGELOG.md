@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on a modified version of [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.1.1
+
+### News
+
+* Improved pagination of the `{{ for each }}` operator.
+
+## 0.1.0
+
+### News
+
+* Support for pagination of `{{ for each }}` via the `{{ paginate }}` operator.
+
 ## 0.0.9
 
 ### News
