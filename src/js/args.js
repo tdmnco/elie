@@ -3,7 +3,6 @@ module.exports = function args(args) {
   const parsed = {
     encoding: 'utf8',
     input: '.',
-    minify: false,
     output: '.'
   }
 

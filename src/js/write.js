@@ -1,6 +1,5 @@
 // Requires:
 const fs = require('fs')
-const minify = require('html-minifier').minify;
 const mkdirp = require('mkdirp')
 const path = require('path')
 const prettyBytes = require('pretty-bytes')
@@ -35,16 +34,7 @@ module.exports = function write(data) {
         filename = path.join(filename + '.html')
         
         let data = markdown.html
-        
-        if (args.minify || typeof args.minify === 'undefined') {
-          data = minify(data, {
-            collapseWhitespace: true,
-            removeComments: true,
-            removeEmptyAttributes: true,
-            removeTagWhitespace: true
-          })
-        }
-        
+                
         console.log('Writing ' + filename + ' (' + prettyBytes(data.length) + ')...')
     
         fs.writeFile(filename, data, (error) => {
