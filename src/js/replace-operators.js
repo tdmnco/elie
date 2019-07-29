@@ -2,13 +2,17 @@
 const replaceRegex = require('./replace-regex')
 
 // Exports:
-module.exports = function replaceOperators(markdown, location) {
-  if (markdown.indexOf('{{ link to directory }}') !== -1) {
-    markdown = replaceRegex(markdown, '{{ link to directory }}', location)
+module.exports = function replaceOperators(markdown, values) {
+  if (markdown.indexOf('{{ next page number }}') !== -1) {
+    markdown = replaceRegex(markdown, '{{ next page number }}', values.nextPage)
   }
 
-  if (markdown.indexOf('{{ link to html }}') !== -1) {
-    markdown = replaceRegex(markdown, '{{ link to html }}', location + '.html')
+  if (markdown.indexOf('{{ previous page number }}') !== -1) {
+    markdown = replaceRegex(markdown, '{{ previous page number }}', values.previousPage)
+  }
+
+  if (markdown.indexOf('{{ slug }}') !== -1) {
+    markdown = replaceRegex(markdown, '{{ slug }}', values.slug)
   }
 
   return markdown

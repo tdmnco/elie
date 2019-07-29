@@ -15,9 +15,7 @@ title: 'Test'
 
 {{ content }}
 
-[Link to directory]({{ link to directory }})
-
-[Link to HTML]({{ link to html }})
+[Link to post](posts/{{ slug }}.html)
 
 {{ end for each }}
 

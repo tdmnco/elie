@@ -50,7 +50,7 @@ module.exports = function replaceForEach(file, data) {
                 process.exit(1)
               }
 
-              location = forEach.directory + '/' + (slugify(filename || title).toLowerCase())
+              const slug = slugify(filename || title).toLowerCase()
 
               let replaced = '' + markdown
   
@@ -62,19 +62,15 @@ module.exports = function replaceForEach(file, data) {
                 replaced = replaceRegex(replaced, '{{ content }}', matter.content)
               }
 
-              if (replaced.indexOf('{{ link to directory }}') !== -1) {
-                replaced = replaceRegex(replaced, '{{ link to directory }}', location)
-              }
-
-              if (replaced.indexOf('{{ link to html }}') !== -1) {
-                replaced = replaceRegex(replaced, '{{ link to html }}', location + '.html')
+              if (replaced.indexOf('{{ slug }}') !== -1) {
+                replaced = replaceRegex(replaced, '{{ slug }}', slug)
               }
 
               if (!forEach.replaced) {
                 forEach.replaced = []
               }
 
-              forEach.replaced.push({ content: replaced, meta })
+              forEach.replaced.push({ content: replaced, meta, slug })
 
               readCount++
 
