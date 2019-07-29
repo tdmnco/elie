@@ -3,6 +3,8 @@ const fs = require('fs')
 const glob = require('glob')
 const grayMatter = require('gray-matter')
 const path = require('path')
+const replaceKeys = require('./replace-keys')
+const replaceOperators = require('./replace-operators')
 const replaceRegex = require('./replace-regex')
 const slugify = require('slugify')
 
@@ -54,17 +56,8 @@ module.exports = function replaceForEach(file, data) {
 
               let replaced = '' + markdown
   
-              for (let key in meta) {
-                replaced = replaceRegex(replaced, '{{ ' + key + ' }}', meta[key])
-              }
-
-              if (replaced.indexOf('{{ content }}') !== -1) {
-                replaced = replaceRegex(replaced, '{{ content }}', matter.content)
-              }
-
-              if (replaced.indexOf('{{ slug }}') !== -1) {
-                replaced = replaceRegex(replaced, '{{ slug }}', slug)
-              }
+              replaced = replaceKeys(replaced, meta)
+              replaced = replaceOperators(replaced, { content: matter.content, slug })
 
               if (!forEach.replaced) {
                 forEach.replaced = []

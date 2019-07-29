@@ -3,6 +3,10 @@ const replaceRegex = require('./replace-regex')
 
 // Exports:
 module.exports = function replaceOperators(markdown, values) {
+  if (markdown.indexOf('{{ content }}') !== -1) {
+    markdown = replaceRegex(markdown, '{{ content }}', values.content)
+  }
+
   if (markdown.indexOf('{{ next page number }}') !== -1) {
     markdown = replaceRegex(markdown, '{{ next page number }}', values.nextPage)
   }

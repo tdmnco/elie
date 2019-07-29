@@ -21,13 +21,13 @@ title: 'Test'
 
 {{ if previous page }}
 
-[Previous page](/archive/{{ previous page number }})
+[Previous page](archive/{{ previous page number }})
 
 {{ end if previous page }}
 
 {{ if next page }}
 
-[Next page](/archive/{{ next page number }})
+[Next page](archive/{{ next page number }})
 
 {{ end if next page }}
 
