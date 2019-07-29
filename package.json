@@ -43,5 +43,5 @@
     "test:build-minify": "node bin/js/cli.js --input=test/markdown --header=test/html/header.html --footer=test/html/footer.html --output=build --minify=true",
     "test:build-minify:index": "node bin/js/cli.js --input=test/markdown/index.md --header=test/html/header.html --footer=test/html/footer.html --output=build --minify=true"
   },
-  "version": "0.1.1"
+  "version": "0.1.2"
 }
