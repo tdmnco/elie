@@ -1,6 +1,7 @@
 // Requires:
 const marked = require('marked')
 const replaceKeys = require('./replace-keys')
+const replaceNewlines = require('./replace-newlines')
 const replaceOperators = require('./replace-operators')
 const replaceRegex = require('./replace-regex')
 
@@ -8,8 +9,8 @@ const replaceRegex = require('./replace-regex')
 module.exports = function replacePaginate(file, data) {
   const meta = file.meta
   const location = file.output.location
-  const footer = data.templates.footer
-  const header = data.templates.header
+  const footer = replaceNewlines(data.templates.footer)
+  const header = replaceNewlines(data.templates.header)
   
   return new Promise((resolve) => {
     const paginated = []
