@@ -4,7 +4,7 @@ description: A post written for testing purposes
 title: Post 6
 ---
 
-# Post 6
+# [{{ title }}]({{ slug }})
 
 Hello there,
 
