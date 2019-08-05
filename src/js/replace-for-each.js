@@ -5,7 +5,6 @@ const grayMatter = require('gray-matter')
 const path = require('path')
 const replaceKeys = require('./replace-keys')
 const replaceOperators = require('./replace-operators')
-const replaceRegex = require('./replace-regex')
 const slugify = require('slugify')
 
 // Exports:

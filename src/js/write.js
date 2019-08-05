@@ -6,7 +6,6 @@ const prettyBytes = require('pretty-bytes')
 
 // Exports:
 module.exports = function write(data) {
-  const args = data.args
   const files = data.files
   
   let totalFiles = 0

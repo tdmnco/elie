@@ -1,5 +1,5 @@
 ---
-date: 2019-01-04
+date: 2019-01-02
 description: A post written for testing purposes
 title: Post 4
 ---

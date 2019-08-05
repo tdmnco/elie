@@ -1,10 +1,10 @@
 ---
-date: 2019-01-04
+date: 2019-01-01
 description: A post written for testing purposes
-title: Post 3
+title: Post 6
 ---
 
-# Post 3
+# Post 6
 
 Hello there,
 

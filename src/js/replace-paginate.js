@@ -27,7 +27,15 @@ module.exports = function replacePaginate(file, data) {
       for (let forEach of file.forEaches) {
         if (forEach.sortBy !== 'none') {
           forEach.replaced.sort((a, b) => {
-            return a.meta[forEach.sortBy] < b.meta[forEach.sortBy] ? (forEach.sortOrder === 'asc' ? -1 : 1) : (forEach.sortOrder === 'asc' ? 1 : -1)
+            let first = a.meta[forEach.sortBy]
+            let second = b.meta[forEach.sortBy]
+
+            if (first instanceof Date && second instanceof Date) {
+              first = first.getTime()
+              second = second.getTime()
+            }
+
+            return first < second ? (forEach.sortOrder === 'asc' ? -1 : 1) : (forEach.sortOrder === 'asc' ? 1 : -1)
           })  
         }
   
