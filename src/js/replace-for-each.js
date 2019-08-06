@@ -55,8 +55,8 @@ module.exports = function replaceForEach(file, data) {
 
               let replaced = '' + markdown
   
-              replaced = replaceKeys(replaced, meta)
               replaced = replaceOperators(replaced, { content: matter.content, slug })
+              replaced = replaceKeys(replaced, meta)
 
               if (!forEach.replaced) {
                 forEach.replaced = []

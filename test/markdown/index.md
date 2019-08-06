@@ -5,13 +5,7 @@ title: 'Test'
 
 {{ paginate }}
 
-{{ for each posts offset=1 limit=1 sort-by=date sort-order=desc }}
-
-# {{ title }}
-
-## {{ date }}
-
-### {{ description }}
+{{ for each posts offset=1 limit=2 sort-by=date sort-order=desc }}
 
 {{ content }}
 

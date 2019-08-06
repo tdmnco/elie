@@ -57,12 +57,12 @@ module.exports = function replacePaginate(file, data) {
           }
   
           let markdown = skeleton.replace(forEach.placeholder, content)
-  
+          
           const previousPage = page - 1
           const nextPage = page + 1
 
-          markdown = replaceKeys(markdown, meta)
           markdown = replaceOperators(markdown, { nextPage, previousPage, slug: forEach.slug })
+          markdown = replaceKeys(markdown, meta)
   
           const endIfNextPageStart = markdown.indexOf('{{ end if next page }}')
           const ifNextPageStart = markdown.indexOf('{{ if next page }}')
