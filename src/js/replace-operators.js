@@ -15,6 +15,12 @@ module.exports = function replaceOperators(markdown, values) {
     markdown = replaceRegex(markdown, '{{ previous page number }}', values.previousPage)
   }
 
+  if (markdown.indexOf('{{ previous page number unless zero }}') !== -1) {
+    const previousPage = values.previousPage
+
+    markdown = replaceRegex(markdown, '{{ previous page number unless zero }}', previousPage === 0 ? '' : previousPage)
+  }
+
   if (markdown.indexOf('{{ slug }}') !== -1) {
     markdown = replaceRegex(markdown, '{{ slug }}', values.slug)
   }

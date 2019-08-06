@@ -6,6 +6,9 @@ const replaceNewlines = require('./replace-newlines')
 const replaceOperators = require('./replace-operators')
 const replaceRegex = require('./replace-regex')
 
+// Constants:
+const prettierOptions = { parser: 'html' }
+
 // Exports:
 module.exports = function replacePaginate(file, data) {
   const meta = file.meta
@@ -23,7 +26,7 @@ module.exports = function replacePaginate(file, data) {
       markdown = replaceKeys(markdown, meta)
       markdown = replaceOperators(markdown, { slug: file.output.slug })
 
-      paginated.push({ html: prettier.format(marked(markdown), { parser: 'html' }), markdown, paginated: false })
+      paginated.push({ html: prettier.format(marked(markdown), prettierOptions), markdown, paginated: false })
     } else {
       for (let forEach of file.forEaches) {
         if (forEach.sortBy !== 'none') {
@@ -111,7 +114,7 @@ module.exports = function replacePaginate(file, data) {
           markdown = replaceRegex(markdown, '{{ if previous page }}', '')
           markdown = replaceRegex(markdown, '{{ end if previous page }}', '')
 
-          paginated.push({ html: prettier.format(marked(markdown), { parser: 'html' }), markdown, page, paginated: true })
+          paginated.push({ html: prettier.format(marked(markdown), prettierOptions), markdown, page, paginated: true })
   
           offset = offset + limit
         }
