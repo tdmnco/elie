@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on a modified version of [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.1.8
+
+### News
+
+* Support for the `{{ template }}` operator.
+* Support for defining a template to render into in the matter of a Markdown file.
+
 ## 0.1.7
 
 ### Bug fixes
