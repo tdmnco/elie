@@ -1,47 +1,75 @@
 // Requires:
 const fs = require('fs')
+const glob = require('glob')
 const path = require('path')
+const prettyBytes = require('pretty-bytes')
 
 // Exports:
 module.exports = function readTemplates(args) {
-  const templates = { header: '', footer: '' }
+  const templatesRead = {}
   
-  let templatesRead = 0
-  let totalTemplates = 0
+  let readCount = 0
+  let templates = args.templates
+  let totalBytes = 0
+  let totalFiles = 0
 
-  return new Promise((resolve) => {    
-    const templatesToRead = []
+  if (templates.slice(-3) !== '.html') {
+    templates = templates + '/**/*.html'
+  }
 
-    for (let template in templates) {
-      const location = args[template]
-
-      if (location) {
-        templatesToRead.push({ input: { location }, template })
+  return new Promise((resolve) => {
+    glob(path.join(templates), function(error, files) {
+      if (error) {
+        console.error(error)
+  
+        process.exit(1)
       }
-    }
 
-    if (templatesToRead.length === 0) {
-      resolve(templates)
-    } else {
-      totalTemplates = Object.keys(templatesToRead).length
+      if (files.length === 0) {
+        console.error('No templates to read in ' + templates + ', aborting!')
 
-      for (let templateToRead of templatesToRead) {
-        fs.readFile(path.join(templateToRead.input.location), args.encoding, (error, data) => {
+        process.exit(1)
+      }
+  
+      totalFiles = files.length
+      
+      for (let index in files) {
+        const location = files[index]
+        const split = location.split('/')
+        const filename = split[split.length - 1]
+        const name = filename.split('.')[0]
+
+        split.pop()
+
+        const directory = split.join('/')
+  
+        fs.readFile(path.join(location), args.encoding, (error, content) => {
+          process.stdout.write('Processing ' + location)
+
           if (error) {
             console.error(error)
-    
+  
             process.exit(1)
           }
+
+          const data = { content, input: { directory, filename, location } }
+          const bytes = data.content.length
+
+          totalBytes += bytes
   
-          templates[templateToRead.template] = data
+          readCount++
   
-          templatesRead++
+          templatesRead[name] = data
+
+          process.stdout.write(' (' + prettyBytes(bytes) + ')...\n')
   
-          if (templatesRead === totalTemplates) {
-            resolve(templates)
-          }
+          if (readCount === totalFiles) {
+            console.log('\n' + totalFiles + ' file' + (totalFiles !== 1 ? 's' : '') + ' read (' + prettyBytes(totalBytes) + ')\n')
+  
+            resolve(templatesRead)
+          }        
         })
-      }  
-    }
+      }
+    })
   })
 }

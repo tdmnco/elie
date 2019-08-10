@@ -3,6 +3,7 @@ const grayMatter = require('gray-matter')
 const parseForEach = require('./parse-for-each')
 const parseOutput = require('./parse-output')
 const parsePaginate = require('./parse-paginate')
+const parseTemplates = require('./parse-templates')
 
 // Exports:
 module.exports = function parse(data) {
@@ -18,11 +19,13 @@ module.exports = function parse(data) {
       const parsedOutput = parseOutput(file, meta, data)
       const parsedForEach = parseForEach(matter.content, location)
       const parsedPaginate = parsePaginate(parsedForEach.markdown, parsedForEach.forEaches, location)
+      const parsedTemplates = parseTemplates(parsedPaginate.markdown)
 
       file.forEaches = parsedPaginate.forEaches
-      file.markdown = parsedPaginate.markdown
+      file.markdown = parsedTemplates.markdown
       file.meta = meta
       file.output = parsedOutput
+      file.templates = parsedTemplates.templates
 
       filesRead++
 

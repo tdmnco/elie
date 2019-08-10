@@ -76,7 +76,7 @@ module.exports = function replaceForEach(file, data) {
     }
 
     Promise.all(promises).then(() => {
-      resolve({ file, data })
+      resolve()
     })
   })
 }

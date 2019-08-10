@@ -2,7 +2,7 @@
 const marked = require('marked')
 const prettier = require('prettier')
 const replaceKeys = require('./replace-keys')
-const replaceNewlines = require('./replace-newlines')
+//const replaceNewlines = require('./replace-newlines')
 const replaceOperators = require('./replace-operators')
 const replaceRegex = require('./replace-regex')
 
@@ -10,18 +10,17 @@ const replaceRegex = require('./replace-regex')
 const prettierOptions = { parser: 'html' }
 
 // Exports:
-module.exports = function replacePaginate(file, data) {
+module.exports = function replacePaginate(file) {
   const meta = file.meta
   const location = file.input.location
-  const footer = replaceNewlines(data.templates.footer)
-  const header = replaceNewlines(data.templates.header)
+  const paginated = []
+  const original = file.markdown
+  //const footer = replaceNewlines(data.templates.footer)
+  //const header = replaceNewlines(data.templates.header)
   
   return new Promise((resolve) => {
-    const paginated = []
-    const skeleton = header + '\n' + file.markdown + '\n' + footer
-
     if (file.forEaches.length === 0) {
-      let markdown = skeleton
+      let markdown = original
 
       markdown = replaceKeys(markdown, meta)
       markdown = replaceOperators(markdown, { slug: file.output.slug })
@@ -56,7 +55,7 @@ module.exports = function replacePaginate(file, data) {
             content = content + replaced.content
           }
   
-          let markdown = skeleton.replace(forEach.placeholder, content)
+          let markdown = original.replace(forEach.placeholder, content)
           
           const previousPage = page - 1
           const nextPage = page + 1

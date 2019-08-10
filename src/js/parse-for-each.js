@@ -3,9 +3,9 @@ module.exports = function parseForEach(markdown, location) {
   const forEaches = []
 
   let count = 0
-  let iterateForEach = true
+  let loop = true
 
-  while (iterateForEach) {
+  while (loop) {
     const forEachStart = markdown.indexOf('{{ for each ')
     const end = markdown.indexOf('{{ end for each }}', forEachStart)
 
@@ -16,7 +16,7 @@ module.exports = function parseForEach(markdown, location) {
     }
 
     if (forEachStart === -1) {
-      iterateForEach = false
+      loop = false
     } else {
       const forEachEnd = markdown.indexOf('}}', forEachStart) + 2
       const endStart = markdown.indexOf('{{ end for each }}', forEachEnd)

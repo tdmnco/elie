@@ -21,12 +21,14 @@
     "babel-eslint": "10.0.2",
     "eslint": "6.1.0",
     "jest": "24.8.0",
-    "npm": "6.10.2"
+    "npm": "6.10.3"
   },
   "homepage": "https://github.com/tdmnco/elie#readme",
   "keywords": [
+    "blog",
     "javascript",
     "json",
+    "markdown",
     "tdmnco",
     "writing"
   ],
@@ -38,11 +40,9 @@
     "url": "git+https://github.com/tdmnco/elie.git"
   },
   "scripts": {
-    "test:build": "node bin/js/cli.js --input=test/markdown --header=test/html/header.html --footer=test/html/footer.html --output=build",
-    "test:build:index": "node bin/js/cli.js --input=test/markdown/index.md --header=test/html/header.html --footer=test/html/footer.html --output=build",
-    "test:build:posts": "node bin/js/cli.js --input=test/markdown/posts --header=test/html/header.html --footer=test/html/footer.html --output=build",
-    "test:build-minify": "node bin/js/cli.js --input=test/markdown --header=test/html/header.html --footer=test/html/footer.html --output=build --minify=true",
-    "test:build-minify:index": "node bin/js/cli.js --input=test/markdown/index.md --header=test/html/header.html --footer=test/html/footer.html --output=build --minify=true"
+    "test:build": "node bin/js/cli.js --input=test/markdown --output=build --templates=test/templates",
+    "test:build:index": "node bin/js/cli.js --input=test/markdown/index.md --output=build --templates=test/templates",
+    "test:build:posts": "node bin/js/cli.js --input=test/markdown/posts --output=build --templates=test/templates"
   },
   "version": "0.1.7"
 }

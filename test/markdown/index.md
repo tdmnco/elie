@@ -3,6 +3,8 @@ filename: index
 title: 'Test'
 ---
 
+{{ template header }}
+
 {{ paginate }}
 
 {{ for each posts offset=1 limit=2 sort-by=date sort-order=desc }}
@@ -26,3 +28,5 @@ title: 'Test'
 {{ end if next page }}
 
 {{ end paginate }}
+
+{{ template footer }}
