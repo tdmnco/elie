@@ -17,12 +17,12 @@ module.exports = function parse(data) {
       const matter = grayMatter(file.content)
       const meta = matter.data
       const parsedOutput = parseOutput(file, meta, data)
-      const parsedForEach = parseForEach(matter.content, location)
+      const parsedTemplates = parseTemplates(matter.content, meta, data, location)
+      const parsedForEach = parseForEach(parsedTemplates.markdown, location)
       const parsedPaginate = parsePaginate(parsedForEach.markdown, parsedForEach.forEaches, location)
-      const parsedTemplates = parseTemplates(parsedPaginate.markdown, meta, data, location)
 
       file.forEaches = parsedPaginate.forEaches
-      file.markdown = parsedTemplates.markdown
+      file.markdown = parsedPaginate.markdown
       file.meta = meta
       file.output = parsedOutput
       file.templates = parsedTemplates.templates

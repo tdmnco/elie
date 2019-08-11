@@ -9,9 +9,15 @@ title: 'Test'
 
 {{ for each posts offset=1 limit=2 sort-by=date sort-order=desc }}
 
-{{ content }}
+  <article>
 
-[Link to post](posts/{{ slug }}.html)
+  {{ content }}
+
+  [Link to post](posts/{{ slug }}.html)
+
+  {{ template author }}
+
+  </article>
 
 {{ end for each }}
 

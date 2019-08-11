@@ -11,7 +11,14 @@ module.exports = function replaceTemplates(file, data) {
         process.exit(1)
       }
 
-      file.markdown = replaceRegex(file.markdown, template.placeholder, data.templates[template.name].content)
+      const content = data.templates[template.name].content
+      const placeholder = template.placeholder
+
+      file.markdown = replaceRegex(file.markdown, placeholder, content)
+
+      for (let forEach of file.forEaches) {
+        forEach.markdown = replaceRegex(forEach.markdown, placeholder, content)
+      }
     }
 
     resolve()

@@ -10,10 +10,3 @@ title: Post 3
 Hello there,
 
 Here is some content for {{ title }}.
-
-All the best,
-
-Kasper Tidemann
-CEO, Tidemann&Co
-
-E-mail: [kt@tdmn.co](kt@tdmn.co)

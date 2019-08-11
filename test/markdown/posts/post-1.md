@@ -14,10 +14,3 @@ Here is some content for {{ title }}. Here is some content for {{ title }}. Here
 Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}.
 
 Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}. Here is some content for {{ title }}.
-
-All the best,
-
-Kasper Tidemann
-CEO, Tidemann&Co
-
-E-mail: [kt@tdmn.co](kt@tdmn.co)
