@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on a modified version of [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.2.0
+
+### Bug fixes
+
+* Trim the content of templates to handle lines that begin with white space.
+
 ## 0.1.9
 
 ### News
