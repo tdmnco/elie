@@ -52,6 +52,8 @@ module.exports = function readTemplates(args) {
             process.exit(1)
           }
 
+          content = content.trim()
+
           const data = { content, input: { directory, filename, location } }
           const bytes = data.content.length
 
