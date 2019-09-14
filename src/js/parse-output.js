@@ -16,7 +16,7 @@ module.exports = function parseOutput(file, meta, data) {
   }
 
   let input = args.input
-  let slug = slugify(filename || title).toLowerCase()
+  let slug = slugify((filename || title) + '').toLowerCase()
 
   if (input.slice(-3) === '.md') {
     const split = input.split('/')

@@ -1,5 +1,6 @@
 // Requires:
 const args = require('./args')
+const check = require('./check')
 const parse = require('./parse')
 const read = require('./read')
 const replace = require('./replace')
@@ -13,8 +14,10 @@ function elie() {
 
   read(data).then((data) => {
     parse(data).then((data) => {
-      replace(data).then((data) => {
-        write(data)
+      check(data).then((data) => {
+        replace(data).then((data) => {
+          write(data)
+        })
       })
     })
   })
