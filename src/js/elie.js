@@ -1,5 +1,6 @@
 // Requires:
 const args = require('./args')
+const chalk = require('chalk')
 const check = require('./check')
 const parse = require('./parse')
 const read = require('./read')
@@ -8,7 +9,7 @@ const write = require('./write')
 
 // Functions:
 function elie() {
-  console.log('✏️  Elie is eloquent writing.\n')
+  console.log(chalk.white('✏️  ' + chalk.bold('Elie') + ' is ' + chalk.underline('eloquent writing') + '.\n'))
 
   const data = { args: args(process.argv) }
 

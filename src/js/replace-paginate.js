@@ -1,8 +1,8 @@
 // Requires:
+const chalk = require('chalk')
 const marked = require('marked')
 const prettier = require('prettier')
 const replaceKeys = require('./replace-keys')
-//const replaceNewlines = require('./replace-newlines')
 const replaceOperators = require('./replace-operators')
 const replaceRegex = require('./replace-regex')
 
@@ -15,8 +15,6 @@ module.exports = function replacePaginate(file) {
   const location = file.input.location
   const paginated = []
   const original = file.markdown
-  //const footer = replaceNewlines(data.templates.footer)
-  //const header = replaceNewlines(data.templates.header)
   
   return new Promise((resolve) => {
     if (file.forEaches.length === 0) {
@@ -67,13 +65,13 @@ module.exports = function replacePaginate(file) {
           const ifNextPageStart = markdown.indexOf('{{ if next page }}')
           
           if (ifNextPageStart && !endIfNextPageStart) {
-            console.error('{{ if next page }} used without {{ end if next page }} in ' + location + ', aborting!')
+            console.error(chalk.red('ERROR: ') + '{{ if next page }} used without {{ end if next page }} in ' + location + ', aborting!')
               
             process.exit(1)
           }
   
           if (!ifNextPageStart && endIfNextPageStart) {
-            console.error('{{ end if next page }} used without {{ if next page }} in ' + location + ', aborting!')
+            console.error(chalk.red('ERROR: ') + '{{ end if next page }} used without {{ if next page }} in ' + location + ', aborting!')
               
             process.exit(1)
           }
@@ -92,13 +90,13 @@ module.exports = function replacePaginate(file) {
           const ifPreviousPageStart = markdown.indexOf('{{ if previous page }}')
           
           if (ifPreviousPageStart && !endIfPreviousPageStart) {
-            console.error('{{ if previous page }} used without {{ end if previous page }} in ' + location + ', aborting!')
+            console.error(chalk.red('ERROR: ') + '{{ if previous page }} used without {{ end if previous page }} in ' + location + ', aborting!')
               
             process.exit(1)
           }
   
           if (!ifPreviousPageStart && endIfPreviousPageStart) {
-            console.error('{{ end if previous page }} used without {{ if previous page }} in ' + location + ', aborting!')
+            console.error(chalk.red('ERROR: ') + '{{ end if previous page }} used without {{ if previous page }} in ' + location + ', aborting!')
               
             process.exit(1)
           }

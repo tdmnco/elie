@@ -1,4 +1,5 @@
 // Requires:
+const chalk = require('chalk')
 const fs = require('fs')
 const glob = require('glob')
 const path = require('path')
@@ -20,13 +21,13 @@ module.exports = function readTemplates(args) {
   return new Promise((resolve) => {
     glob(path.join(templates), function(error, files) {
       if (error) {
-        console.error(error)
+        console.error(chalk.red('ERROR: ') + error)
   
         process.exit(1)
       }
 
       if (files.length === 0) {
-        console.error('No templates to read in ' + templates + ', aborting!')
+        console.error(chalk.red('ERROR: ') + 'No templates to read in ' + templates + ', aborting!')
 
         process.exit(1)
       }
@@ -47,7 +48,7 @@ module.exports = function readTemplates(args) {
           process.stdout.write('Processing ' + location)
 
           if (error) {
-            console.error(error)
+            console.error(chalk.red('ERROR: ') + error)
   
             process.exit(1)
           }
@@ -66,7 +67,7 @@ module.exports = function readTemplates(args) {
           process.stdout.write(' (' + prettyBytes(bytes) + ')...\n')
   
           if (readCount === totalFiles) {
-            console.log('\n' + totalFiles + ' file' + (totalFiles !== 1 ? 's' : '') + ' read (' + prettyBytes(totalBytes) + ')\n')
+            console.log('\n' + chalk.green('OK: ') + totalFiles + ' file' + (totalFiles !== 1 ? 's' : '') + ' read (' + prettyBytes(totalBytes) + ')\n')
   
             resolve(templatesRead)
           }        

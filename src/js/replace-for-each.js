@@ -1,4 +1,5 @@
 // Requires:
+const chalk = require('chalk')
 const fs = require('fs')
 const glob = require('glob')
 const grayMatter = require('gray-matter')
@@ -21,7 +22,7 @@ module.exports = function replaceForEach(file, data) {
       promises.push(new Promise((innerResolve) => {
         glob(file.input.directory + '/' + forEach.directory + '/*.md', function(error, files) {
           if (error) {
-            console.error(error)
+            console.error(chalk.red('ERROR: ') + error)
       
             process.exit(1)
           }
@@ -35,7 +36,7 @@ module.exports = function replaceForEach(file, data) {
   
             fs.readFile(path.join(location), data.args.encoding, (error, content) => {
               if (error) {
-                console.error(error)
+                console.error(chalk.red('ERROR: ') + error)
 
                 process.exit(1)
               }
@@ -46,7 +47,7 @@ module.exports = function replaceForEach(file, data) {
               const title = meta.title
 
               if (!filename && !title) {
-                console.error('No filename or title contained in the metadata for ' + file.input.location + ', aborting!')
+                console.error(chalk.red('ERROR: ') + 'No filename or title contained in the metadata for ' + file.input.location + ', aborting!')
             
                 process.exit(1)
               }

@@ -1,3 +1,6 @@
+// Imports:
+const chalk = require('chalk')
+
 // Exports:
 module.exports = function check(data) {
   const files = {}
@@ -30,7 +33,7 @@ module.exports = function check(data) {
           second.push('title: ' + addedFile.meta.title)
         }
 
-        console.error('More than one file exists with the same output filename, aborting!\n')
+        console.error(chalk.red('ERROR: ') + 'More than one file exists with the same output filename, aborting!\n')
         console.error('-> ' + file.input.location + ' (' + first.join(', ') + ')')
         console.error('-> ' + addedFile.input.location + ' (' + second.join(', ') + ')')
     

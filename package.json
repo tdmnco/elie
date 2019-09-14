@@ -6,6 +6,7 @@
   },
   "description": "Elie is eloquent writing based on simple Markdown processing.",
   "dependencies": {
+    "chalk": "2.4.2",
     "glob": "7.1.4",
     "gray-matter": "4.0.2",
     "marked": "0.7.0",
@@ -44,5 +45,5 @@
     "test:build:index": "node bin/js/cli.js --input=test/markdown/index.md --output=build --templates=test/templates",
     "test:build:posts": "node bin/js/cli.js --input=test/markdown/posts --output=build --templates=test/templates"
   },
-  "version": "0.2.2"
+  "version": "0.2.3"
 }

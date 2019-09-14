@@ -1,4 +1,5 @@
 // Requires:
+const chalk = require('chalk')
 const path = require('path')
 const slugify = require('slugify')
 
@@ -10,7 +11,7 @@ module.exports = function parseOutput(file, meta, data) {
   let filename = meta.filename
 
   if (!filename && !title) {
-    console.error('No filename or title contained in the metadata for ' + file.input.location + ', aborting!')
+    console.error(chalk.red('ERROR: ') + 'No filename or title contained in the metadata for ' + file.input.location + ', aborting!')
 
     process.exit(1)
   }

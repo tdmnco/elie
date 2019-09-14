@@ -1,3 +1,6 @@
+// Imports:
+const chalk = require('chalk')
+
 // Exports:
 module.exports = function parseForEach(markdown, location) {
   const forEaches = []
@@ -10,7 +13,7 @@ module.exports = function parseForEach(markdown, location) {
     const end = markdown.indexOf('{{ end for each }}', forEachStart)
 
     if (forEachStart != -1 && end === -1) {
-      console.error('{{ for each }} missing an {{ end for each }} in ' + location + ', aborting!')
+      console.error(chalk.red('ERROR: ') + '{{ for each }} missing an {{ end for each }} in ' + location + ', aborting!')
       
       process.exit(1)
     }
@@ -23,7 +26,7 @@ module.exports = function parseForEach(markdown, location) {
       const endEnd = endStart + 18
 
       if (endStart < forEachEnd) {
-        console.error('{{ end for each }} before {{ for each }} in ' + location + ', aborting!')
+        console.error(chalk.red('ERROR: ') + '{{ end for each }} before {{ for each }} in ' + location + ', aborting!')
       
         process.exit(1)
       }
@@ -59,19 +62,19 @@ module.exports = function parseForEach(markdown, location) {
           }
         }
       } else if (directory === '}}') {
-        console.error('{{ for each }} used without directory name in ' + location + ', aborting!')
+        console.error(chalk.red('ERROR: ') + '{{ for each }} used without directory name in ' + location + ', aborting!')
       
         process.exit(1)
       }
 
       if (limit !== null && limit < 1) {
-        console.error('{{ for each }} contains offset lower than 1 in ' + location + ', aborting!')
+        console.error(chalk.red('ERROR: ') + '{{ for each }} contains offset lower than 1 in ' + location + ', aborting!')
       
         process.exit(1)
       }
 
       if (offset !== null && offset < 1) {
-        console.error('{{ for each }} contains offset lower than 1 in ' + location + ', aborting!')
+        console.error(chalk.red('ERROR: ') + '{{ for each }} contains offset lower than 1 in ' + location + ', aborting!')
       
         process.exit(1)
       }

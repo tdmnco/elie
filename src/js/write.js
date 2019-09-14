@@ -1,4 +1,5 @@
 // Requires:
+const chalk = require('chalk')
 const fs = require('fs')
 const mkdirp = require('mkdirp')
 const path = require('path')
@@ -18,7 +19,7 @@ module.exports = function write(data) {
   for (let file of files) {
     mkdirp(path.join(file.output.directory), (error) => {
       if (error) {
-        console.error(error)
+        console.error(chalk.red('ERROR: ') + error)
 
         process.exit(1)
       }
@@ -38,7 +39,7 @@ module.exports = function write(data) {
     
         fs.writeFile(filename, data, (error) => {
           if (error) {
-            console.error(error)
+            console.error(chalk.red('ERROR: ') + error)
     
             process.exit(1)
           }
@@ -46,7 +47,7 @@ module.exports = function write(data) {
           writeCount++
     
           if (writeCount === totalFiles) {
-            console.log('\nDone! ✅')
+            console.log(chalk.green('\nDone! ✅'))
           }
         })
       }
