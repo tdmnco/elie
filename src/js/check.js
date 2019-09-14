@@ -11,9 +11,28 @@ module.exports = function check(data) {
       const addedFile = files[location]
 
       if (addedFile) {
+        const first = []
+        const second = []
+
+        if (file.meta.filename) {
+          first.push('filename: ' + file.meta.filename)
+        }
+
+        if (file.meta.title) {
+          first.push('title: ' + file.meta.title)
+        }
+
+        if (addedFile.meta.filename) {
+          second.push('filename: ' + addedFile.meta.filename)
+        }
+
+        if (addedFile.meta.title) {
+          second.push('title: ' + addedFile.meta.title)
+        }
+
         console.error('More than one file exists with the same output filename, aborting!\n')
-        console.error('-> ' + file.input.location + ' (filename: ' + file.meta.filename + ')')
-        console.error('-> ' + addedFile.input.location + ' (filename: ' + addedFile.meta.filename + ')')
+        console.error('-> ' + file.input.location + ' (' + first.join(', ') + ')')
+        console.error('-> ' + addedFile.input.location + ' (' + second.join(', ') + ')')
     
         process.exit(1)
       }
