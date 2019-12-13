@@ -22,7 +22,7 @@
     "babel-eslint": "10.0.3",
     "eslint": "6.4.0",
     "jest": "24.9.0",
-    "npm": "6.11.3"
+    "npm": "6.13.4"
   },
   "homepage": "https://github.com/tdmnco/elie#readme",
   "keywords": [
